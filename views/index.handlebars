@@ -1,12 +1,90 @@
-<div class="container">
-    {{#each matches}}
-    <div class="result">
-        <ul>
-            <li>Name: {{recipeName}}</li>
-            <li>Ingredients: {{ingredients}}</li>
-            <li>Rating: {{rating}}</li>
-            <li>Preparation Time: {{totalTimeInSeconds}}</li>
-        </ul>
+<!--  Main content  -->
+
+<div class="wrapper">
+
+    <div class="hero">
+
+        <div class="header">
+            <div class="title">
+                <h1>Chef's Den</h1>
+            </div>
+            <div class="login">
+                <h6 id="open-login-modal">login</h6>
+            </div>
+        </div>
+
+        <div class="main">
+            <input class="main-input" type="text" placeholder="Search..." id="query">
+            <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
+            <button class="main-button" type="button" id="open-filters-modal">Filters</button>
+            <button class="main-button" type="button" id="search-button">Search</button>
+        </div>
+
+        <div class="results-area">
+            {{#each matches}}
+            <div class="result">
+                <ul>
+                    <li>Name: {{recipeName}}</li>
+                    <li>Ingredients: {{ingredients}}</li>
+                    <li>Rating: {{rating}}</li>
+                    <li>Preparation Time: {{totalTimeInSeconds}}</li>
+                </ul>
+            </div>
+            {{/each}}
+        </div>
+
     </div>
-    {{/each}}
+
+</div>
+
+<!--  Modals  -->
+
+<div id="login-modal" class="modal">
+
+    <form class="modal-content animate">
+        <div class="login-container">
+            <label for="username">
+                <b>Username</b>
+            </label>
+            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" required>
+            <label for="password">
+                <b>Password</b>
+            </label>
+            <input class="login-modal-input" type="password" placeholder="Enter Password" name="password" required>
+            <button class="login-modal-button" type="submit">Login</button>
+        </div>
+
+        <div class="login-container cancel-container">
+            <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+        </div>
+    </form>
+
+</div>
+
+<div id="filters-modal" class="modal">
+
+    <div class="modal-content animate">
+        <div class="filters-container cuisines-section">
+            <h5 class="filter-title">Cuisine</h5>
+            <span id="cuisines-content"></span>
+        </div>
+        <div class="filters-container diet-section">
+            <h5 class="filter-title">Diets</h5>
+            <span id="diets-content"></span>
+        </div>
+        <div class="filters-container intolerances-section">
+            <h5 class="filter-title">Intolerances</h5>
+            <span id="intolerances-content"></span>
+        </div>
+        <div class="filters-container selection-container">
+            <div class="accept">
+                <button class="login-modal-button acceptbtn" type="button">Accept</button>
+            </div>
+            <div class="cancel">
+                <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
 </div>
