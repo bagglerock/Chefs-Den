@@ -1,7 +1,12 @@
-<ul>
-    <li>Title: {{Title}}</li>
-    <li>Year: {{Year}}</li>
-    <li>IMDB Rating: {{imdbRating}}</li>
-    <li>Plot: {{Plot}}</li>
-    
-</ul>
+<div class="container">
+    {{#each matches}}
+    <div class="result">
+        <ul>
+            <li>Name: {{recipeName}}</li>
+            <li>Ingredients: {{ingredients}}</li>
+            <li>Rating: {{rating}}</li>
+            <li>Preparation Time: {{totalTimeInSeconds}}</li>
+        </ul>
+    </div>
+    {{/each}}
+</div>
