@@ -15,7 +15,7 @@ h6 {
 
 .wrapper {
     display: grid;
-    grid-template-rows: auto;
+    grid-template-rows: 10fr 1fr;
     box-sizing: border-box;
     height: 100%;
 }
@@ -27,10 +27,28 @@ h6 {
     background-image: url("../img/basil-delicious-food-459469.jpg");
     display: grid;
     grid-template-rows: 1fr 4fr;
+    border-bottom: solid 10px rgba(255, 177, 32, 0.938); 
 }
 
 .hero > div {
     color: white;
+}
+
+.results-area {
+    padding: 20px 10px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+
+}
+
+.result {
+    font-family: 'Pontano Sans', sans-serif;
+    border: solid black 1px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: black;
 }
 
 .header {
@@ -75,20 +93,6 @@ h6 {
 .main-button {
     background: #420C3B;
     color: white;
-}
-
-.results-area {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 5px;
-
-}
-
-.result {
-    border: solid black 1px;
-    padding: 10px 20px;
-    background-color: #fafafa;
-    color: black;
 }
 
 

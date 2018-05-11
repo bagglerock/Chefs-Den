@@ -20,19 +20,10 @@
             <button class="main-button" type="button" id="search-button">Search</button>
         </div>
 
-        <div class="results-area">
-            {{#each matches}}
-            <div class="result">
-                <ul>
-                    <li>Name: {{recipeName}}</li>
-                    <li>Ingredients: {{ingredients}}</li>
-                    <li>Rating: {{rating}}</li>
-                    <li>Preparation Time: {{totalTimeInSeconds}}</li>
-                </ul>
-            </div>
-            {{/each}}
-        </div>
+    </div>
 
+    <div class="results-area">
+        {{>recipes/recipe-block}}
     </div>
 
 </div>

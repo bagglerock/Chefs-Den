@@ -74,4 +74,22 @@ $(document).ready(function () {
         $("#filters-modal").show();
     })
 
+    $("#search-button").on("click", function(event) {
+        event.preventDefault();
+
+        var query = {
+            query: $("#query").val().trim()
+        };
+
+        $.ajax("/api/recipes", {
+            type: "POST",
+            data: query
+          }).then(
+            function(res) {
+                $("html").html(res);
+
+            }
+          );
+    })
+
 })

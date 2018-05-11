@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/chitramaddy/project-2#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
