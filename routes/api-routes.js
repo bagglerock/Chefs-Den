@@ -24,10 +24,15 @@ module.exports = function (app) {
                     hbsObject.matches[i].smallImageUrls = {smallImageUrls: img};
                 }
                 res.render("index", hbsObject);
+                //location.reload();
         })
 
     });
     app.get("/", function(req, res){
+        res.render("index");
+    })
+
+    app.get("/recipes", function(req, res){
         res.render("index");
     })
 }

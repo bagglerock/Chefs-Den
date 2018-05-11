@@ -66,8 +66,12 @@ h6 {
 .login {
     grid-column: 3 / 4;
     text-align: right;
-    padding: 10px 30px;
+    padding: 10px 10px 10px 0;;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
+
+
 
 .title > h1 {
     font-family: 'Great Vibes', cursive;
