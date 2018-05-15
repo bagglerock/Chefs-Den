@@ -7,10 +7,25 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-        body: {
+       recipe_img: {
+        type: DataTypes.STRING,
+        },
+        review: {
             type: DataTypes.TEXT,
             allowNull: false,
-            len: [1]
+        },
+        rating: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        foreignKey: {
+            type: DataTypes.STRING,
+        },
+        recipe_id: {
+            type:DataTypes.STRING
+        }, 
+        recipe_title: {
+            type: DataTypes.TEXT
         }
     });
 
@@ -25,5 +40,5 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
- return Favorite;   
+    return Favorite;
 };

@@ -3,6 +3,11 @@ body, html {
     height: 100%;
 }
 
+h4 {
+    font-family: 'Poiret One', cursive;
+    font-size: 28px;
+}
+
 h5 {
     font-family: 'Poiret One', cursive;
     font-size: 22px;
@@ -34,11 +39,11 @@ h6 {
     color: white;
 }
 
-.results-area {
+#results-area {
     padding: 20px 10px;
     background-color: white;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
 
 }
@@ -49,6 +54,7 @@ h6 {
     padding: 10px 20px;
     background-color: #fafafa;
     color: black;
+    text-align: center;
 }
 
 .header {
@@ -66,8 +72,12 @@ h6 {
 .login {
     grid-column: 3 / 4;
     text-align: right;
-    padding: 10px 30px;
+    padding: 10px 10px 10px 0;;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
+
+
 
 .title > h1 {
     font-family: 'Great Vibes', cursive;
@@ -78,6 +88,9 @@ h6 {
 
 .main {
     text-align: center;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 
 .main-input, .main-button {
@@ -123,7 +136,7 @@ h6 {
 
 .modal-content {
     background-color: #420C3B;
-    margin: 5% auto 15% auto;
+    margin: 2% auto 15% auto;
     border: 1px solid #888;
     width: 80%;
     color: white;
@@ -219,7 +232,7 @@ span.psw {
 
 
 .filters-container {
-    padding: 16px;
+    padding: 10px;
 }
 
 .selection-container {
@@ -240,5 +253,31 @@ span.psw {
     background-color: rgba(255, 177, 32, 0.938); 
     border-radius: 5px;
     margin: 1px;
+
+}
+
+#recipe-section {
+    display: grid;
+    grid-template-columns: auto;
+    margin: 10px;
+}
+
+#recipe-section > div {
+    background-color: white;
+    padding: 15px;
+    color: black;
+    font-family: 'Pontano Sans', sans-serif;
+    text-align: center;
+
+}
+
+.recipe-modal-ingredients-header {
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 24px;
+    padding: 5px 0 ;
+}
+
+.recipe-modal-ingredients-content {
+    padding: 10px 0 0 20px;
 
 }
