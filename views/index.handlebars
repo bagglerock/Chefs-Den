@@ -19,16 +19,22 @@
         </div>
 
         <div class="main">
-            <input class="main-input" type="text" placeholder="Search..." id="query">
-            <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
-            <button class="main-button" type="button" id="open-filters-modal">Filters</button>
-            <button class="main-button" type="button" id="search-button">Search</button>
+            <div class="search-section">
+                <input class="main-input" type="text" placeholder="Search..." id="query">
+                <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
+                <button class="main-button" type="button" id="open-filters-modal">Filters</button>
+                <button class="main-button" type="button" id="search-button">Search</button>
+            </div>
+            <div id="ingredients-area"></div>
+            <div id="filters-area"></div>
+
         </div>
+
+
 
     </div>
 
-    <div class="results-area">
-        {{>recipes/recipe-block}}
+    <div id="results-area">
     </div>
 
 </div>
@@ -42,11 +48,11 @@
             <label for="username">
                 <b>Username</b>
             </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="username" required>
+            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="login-username" required>
             <label for="password">
                 <b>Password</b>
             </label>
-            <input class="login-modal-input" type="password" placeholder="Enter Password" name="password" id="password" required>
+            <input class="login-modal-input" type="password" placeholder="Enter Password" name="password" id="login-password" required>
             <button class="login-modal-button" type="submit" id="login">Login</button>
         </div>
 
@@ -72,7 +78,8 @@
             <label for="password">
                 <b>Password</b>
             </label>
-            <input class="login-modal-input" type="password" placeholder="Enter Password" name="signup-password" id="password" required>
+            <input class="login-modal-input" type="password" placeholder="Enter Password" name="signup-password" id="signup-password"
+                required>
             <label for="about">
                 <b>About</b>
             </label>
@@ -81,11 +88,11 @@
                 <b>Image URL</b>
             </label>
             <input class="login-modal-input" type="text" placeholder="Enter Image URL" name="img-url" id="signup-img-url" required>
-            <button class="login-modal-button" type="submit">Sign Up</button>
+            <button id="signup-button" class="login-modal-button" type="submit">Sign Up</button>
         </div>
 
         <div class="login-container cancel-container">
-            <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+            <button class="login-modal-button cancelbtn" id="signup-cancel" type="button">Cancel</button>
         </div>
     </form>
 
@@ -107,13 +114,24 @@
             <span id="intolerances-content"></span>
         </div>
         <div class="filters-container selection-container">
-            <div class="accept">
-                <button class="login-modal-button acceptbtn" type="button">Accept</button>
-            </div>
             <div class="cancel">
-                <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+                <button class="login-modal-button cancelbtn" type="button" id="filters-close">Close</button>
             </div>
+        </div>
+    </div>
 
+</div>
+
+
+<div id="recipes-modal" class="modal">
+
+    <div class="modal-content animate">
+        <div id="recipe-section"></div>
+
+        <div class="filters-container selection-container">
+            <div class="cancel">
+                <button class="login-modal-button cancelbtn" type="button" id="filters-close">Close</button>
+            </div>
         </div>
     </div>
 

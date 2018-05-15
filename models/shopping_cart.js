@@ -11,13 +11,21 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: false,
             len: [1]
+        }, 
+        recipeId: {
+            type: DataTypes.INTEGER
+        }, 
+        ingredientName: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        qty: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
 
     cart.associate = function (models) {
-        cart.hasMany(models.Cart, {
-            onDelete: "cascade"
-        });
         cart.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
