@@ -23,7 +23,7 @@ var chosenFilters = [
     },
     {
         name: "intolerances",
-        filters: ["394^Peanut-Free"]
+        filters: []
     }
 ];
 
@@ -136,12 +136,18 @@ $(document).ready(function() {
             var query = {
                 query: $("#query").val().trim()
             };
-            /*if (chosenIngredients.length > 0) {
+            if (chosenIngredients.length > 0) {
                 query.ingredients = chosenIngredients;
             }
-            if (chosenFilters.length > 0) {
-                query.filters = chosenFilters;
-            }*/
+            for (var i = 0; i < chosenFilters.length; i++){
+                if (chosenFilters[i].filters.length > 0){
+                    Object.defineProperty(query, chosenFilters[i].name, {
+                        value: chosenFilters[i].filters,
+                        enumerable: true
+                      });
+                }
+
+            }
     
             $.ajax("/recipes/", {
                 type: "POST",

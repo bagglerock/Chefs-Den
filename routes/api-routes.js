@@ -39,6 +39,11 @@ module.exports = function (app) {
   app.post("/recipes/", function (req, res) {
     //String
     var query = req.body.query;
+    console.log(query);
+    console.log(req.body.ingredients);
+    console.log(req.body.cuisines);
+    console.log(req.body.diets);
+    console.log(req.body.intolerances);
 
     //Arrays
     /*var ingredients = req.body.ingredients;

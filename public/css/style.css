@@ -135,11 +135,11 @@ h6 {
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #420C3B;
+    background-color: #d5d5d5;
     margin: 2% auto 15% auto;
     border: 1px solid #888;
     width: 80%;
-    color: white;
+    color: black;
 }
 
 /* The Close Button */
@@ -249,10 +249,15 @@ span.psw {
 }
 
 .filter-button {
-    padding: 5px 10px;
-    background-color: rgba(255, 177, 32, 0.938); 
+    padding: 10px 15px;
+    background-color: forestgreen; 
+    color: white;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid white;
+    box-sizing: border-box;
     border-radius: 5px;
-    margin: 1px;
+    font-size: 15px;
 
 }
 

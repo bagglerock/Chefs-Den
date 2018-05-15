@@ -30,7 +30,6 @@ function makeButtonsFor(filterName) {
                 button.addClass("filter-button " + filterName + "-button");
                 button.attr("search-value", searchValue);
                 button.text(searchValueClean);
-
                 //check to see if this searchValue exists in the chosenFiltersSelected filterName array and addclass filter-selected if it is
                 for ( var k = 0; k < chosenFilters.length; k++){
                     if(chosenFilters[k].name === filterName){
@@ -139,13 +138,32 @@ $(document).ready(function () {
 
     //  Event listener:  Add the filter if the filter name is clicked
     $("#filters-modal").on("click", ".filter-button", function () {
-        //if the filter is clicked toggle selected
-        var filterName = $(this).attr("search-value");
-        var filterClass = $(this).attr("class");
-        filterClass = filterClass.replace("filter-button ", "").replace("-button", "");
+        //take the search value of the button
+        var filterButtonName = $(this).attr("search-value");
+        //take the classes added to this filter
+        var filterButtonClasses = $(this).attr("class");
+        //extract the type and set it to a variable, ie. (diets, intolerances, cuisines)
+        var filterButtonType = filterButtonClasses.replace("filter-selected", "").replace("filter-button ", "").replace("-button", "");
+        //trim off the space at the end (annoying bug)
+        filterButtonType = filterButtonType.replace(" ", "");
+        //for loop to go find a match in the corresponding type
         for (var i = 0; i < chosenFilters.length; i++){
-            if(chosenFilters[i].name === filterClass){
-                chosenFilters[i].filters.push(filterName);
+            //to help make it easier to read set chosenType to be the name of the type in the chosenFilters array
+            var chosenType = chosenFilters[i].name;
+            //if the chosenType is the same as the filterbuttonType then do either one of two things
+            if(chosenType === filterButtonType){
+                //to make it easier to read set the array of filters chosen that is inside that other inside array(confused yet?)
+                var theFiltersWithin = chosenFilters[i].filters;
+                //if the filter exists in the chosenFilters array then take it out of the array
+                if(theFiltersWithin.includes(filterButtonName)){
+                    var indexOfChosenFilter = theFiltersWithin.indexOf(filterButtonName);
+                    theFiltersWithin.splice(indexOfChosenFilter , 1);
+                    makeButtonsFor(filterButtonType);
+                //if the filter doesnt exist in the chosenFilters array then add it to the array
+                } else {
+                    theFiltersWithin.push(filterButtonName);  
+                    makeButtonsFor(filterButtonType);
+                }
             }
         }
     })
