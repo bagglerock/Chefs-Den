@@ -12,7 +12,21 @@ var filters = [{
     }
 ];
 
-var chosenFilters = [];
+var chosenFilters = [
+    {
+        name: "cuisines",
+        filters: []
+    },
+    {
+        name: "diets",
+        filters: []  
+    },
+    {
+        name: "intolerances",
+        filters: ["394^Peanut-Free"]
+    }
+];
+
 var chosenIngredients = [];
 
 
