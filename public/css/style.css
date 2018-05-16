@@ -288,19 +288,23 @@ span.psw {
     padding: 5px 0 ;
 }
 
-.recipe-modal-ingredients-content {
-    padding: 10px 0 0 20px;
-
-}
-
 .filter-selected {
     background-color: red;
 }
 
-div > #add-fav {
-    color: #ad1400;
-    font-weight: bolder;
-    font-size: 1em;
-    border-top: solid black 1px;
-    background-color: pink;
+.ingredient {
+    padding: 10px;
+}
+
+.recipe-modal-ingredients-header > p{
+    font-size: 12px;
+}
+
+#recipe-section > #fav-share-section {
+    text-align: right;
+}
+
+#recipe-section > #fav-share-section > .fav-div-properties > li{
+    display: inline-block;
+    padding: 5px;
 }

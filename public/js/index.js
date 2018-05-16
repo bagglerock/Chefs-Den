@@ -245,8 +245,15 @@ $(document).ready(function () {
 
     })
 
-    $("#recipes-modal").on("click", "#add-fav", function() {
+    $("#recipes-modal").on("click", "#add-favorite", function() {
         console.log($(this).attr("recipe-id"));
+    })
+
+    $("#recipes-modal").on("click", "#share-favorite", function() {
+        console.log($(this).attr("recipe-id"));
+    })
+    $("#recipes-modal").on("click", ".ingredient", function() {
+        console.log($(this).attr("ingredient-name"));
     })
 
 })

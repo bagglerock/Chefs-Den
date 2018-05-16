@@ -21,7 +21,6 @@ function fixImage(resObject) {
   } else {
     return null;
   }
-
 }
 
 module.exports = function (app) {
@@ -48,9 +47,9 @@ module.exports = function (app) {
     var diets = req.body.diets;
     var intolerances = req.body.intolerances;
 
-    var queryURL = "http://api.yummly.com/v1/api/recipes?";
+    var queryURL = "http://api.yummly.com/v1/api/recipes?&maxResult=20";
 
-    queryURL += "_app_id=" + app_id;
+    queryURL += "&_app_id=" + app_id;
     queryURL += "&_app_key=" + app_key;
 
     if (query) {
