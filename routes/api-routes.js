@@ -1,3 +1,7 @@
+if ((process.env.NODE_ENV || 'development') === 'development') {
+  require('dotenv').load();
+} 
+
 require("dotenv").config();
 
 var db = require("../models");
