@@ -9,21 +9,25 @@ var app_key = keys.yummly.app_key;
 
 
 function fixImage(resObject) {
-  for (var i = 0; i < resObject.matches.length; i++) {
-    if (resObject.matches[i].smallImageUrls) {
-      var img = resObject.matches[i].smallImageUrls[0];
-      resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
-      resObject.matches[i].totalTimeInSeconds = resObject.matches[i].totalTimeInSeconds / 60;
-    }
+  if(resObject){
+      for (var i = 0; i < resObject.matches.length; i++) {
+        if (resObject.matches[i].smallImageUrls) {
+          var img = resObject.matches[i].smallImageUrls[0];
+          resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
+          resObject.matches[i].totalTimeInSeconds = resObject.matches[i].totalTimeInSeconds / 60;
+        }
+      }
+      return resObject;
+  } else {
+    return null;
   }
-  return resObject;
+
 }
 
 module.exports = function (app) {
 
   //route for creating a user and adding the user to the database
   app.post("/api/user", function (req, res) {
-    console.log(req.body)
     db.User.create({
       email: req.body.email,
       password: req.body.password,
@@ -39,50 +43,67 @@ module.exports = function (app) {
   app.post("/recipes/", function (req, res) {
     //String
     var query = req.body.query;
-    console.log(query);
-    console.log(req.body.ingredients);
-    console.log(req.body.cuisines);
-    console.log(req.body.diets);
-    console.log(req.body.intolerances);
-
-    //Arrays
-    /*var ingredients = req.body.ingredients;
+    var ingredients = req.body.ingredients;
     var cuisines = req.body.cuisines;
     var diets = req.body.diets;
     var intolerances = req.body.intolerances;
 
-    if (ingredients.length > 0){
-      //go through the array and construct each of the ampersand queries
+    var queryURL = "http://api.yummly.com/v1/api/recipes?";
+
+    queryURL += "_app_id=" + app_id;
+    queryURL += "&_app_key=" + app_key;
+
+    if (query) {
+      queryURL += "&q=" + query;
     }
-    if (cuisines.length > 0 ){
-      ///go through the array and construct each of the ampersand queries
+
+    if (ingredients && ingredients.length > 0) {
+      var ingredientsString = "";
+      for (var i = 0; i < ingredients.length; i++) {
+        ingredientsString += "&allowedIngredient[]=" + ingredients[i];
+      }
+      queryURL += ingredientsString;
     }
-    if (diets.length > 0){
-      //go through the array and construct each of the ampersand queries
+
+    if (cuisines && cuisines.length > 0) {
+      var cuisinesString = "";
+      for (var i = 0; i < cuisines.length; i++) {
+        cuisinesString += "&allowedCuisine[]=" + cuisines[i];
+      }
+      queryURL += cuisinesString;
     }
-    if (intolerances.length > 0){
-      ///go through the array and construct each of the ampersand queries
-    }*/
-    
-    //console.log(ingredients);
-    request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
-      function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-          //  have to parse the response to JSON
-          var response = JSON.parse(body);
-        }
-        response = fixImage(response);
-        res.send(response);
-      })
+
+    if (diets && diets.length > 0) {
+      var dietsString = "";
+      for (var i = 0; i < diets.length; i++) {
+        dietsString += "&allowedDiet[]=" + diets[i];
+      }
+      queryURL += dietsString;
+    }
+
+    if (intolerances && intolerances.length > 0) {
+      var intolerancesString = "";
+      for (var i = 0; i < intolerances.length; i++) {
+        intolerancesString += "&allowedAllergy[]=" + intolerances[i];
+      }
+      queryURL += intolerancesString;
+    }
+
+    console.log(queryURL);
+    request(queryURL, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        //  have to parse the response to JSON
+        var response = JSON.parse(body);
+      }
+      response = fixImage(response);
+      res.send(response);
+
+      if (!response) {
+        res.send("0 matches found");
+      }
+    })
   });
 
-  //one way of doing it
-
-  //when the heart is clicked,
-  //store that results.matches[i].id in favorites table
-  //when the favorites page is loaded get all the items on the favorite page to load
-
-  //Where as the other way is to send a request for a specific id 
   app.get("/recipes/:id", function (req, res) {
     var recipeId = req.params.id;
     request("http://api.yummly.com/v1/api/recipe/" + recipeId + "?_app_id=" + app_id + "&_app_key=" + app_key,

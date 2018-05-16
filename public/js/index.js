@@ -31,10 +31,10 @@ function makeButtonsFor(filterName) {
                 button.attr("search-value", searchValue);
                 button.text(searchValueClean);
                 //check to see if this searchValue exists in the chosenFiltersSelected filterName array and addclass filter-selected if it is
-                for ( var k = 0; k < chosenFilters.length; k++){
-                    if(chosenFilters[k].name === filterName){
+                for (var k = 0; k < chosenFilters.length; k++) {
+                    if (chosenFilters[k].name === filterName) {
                         var exists = chosenFilters[k].filters.includes(searchValue);
-                        if(exists){
+                        if (exists) {
                             button.addClass("filter-selected");
                         }
                     }
@@ -63,6 +63,21 @@ function showChosenIngredients() {
     }
 }
 
+function showFilters(){
+    $("#filters-area").empty();
+    for (var i = 0; i < chosenFilters.length; i++){
+        if (chosenFilters[i].filters.length > 0){
+            for (var j = 0; j < chosenFilters[i].filters.length; j++){
+                var thisFilter = chosenFilters[i].filters[j];
+                var button = $("<button>");
+                button.text(cleanSearchValue(thisFilter)).addClass("filter-button fas fa-trash chosen-filter");
+                button.attr("search-value", thisFilter);
+                $("#filters-area").append(button);
+            }
+        }
+    }
+}
+
 
 $(document).ready(function () {
 
@@ -87,7 +102,7 @@ $(document).ready(function () {
     })
 
     //  Event listener: click to close(hide) the modal
-    $(".close").on("click", function () {
+    $("#filters-close").on("click", function () {
         $(".modal").hide();
         showFilters();
     })
@@ -120,9 +135,12 @@ $(document).ready(function () {
     $("#add-ingredient").on("click", function () {
         event.preventDefault();
         var query = $("#query").val().trim();
-        chosenIngredients.push(query);
-        showChosenIngredients();
-        $("#query").val("");
+        if (query !== "") {
+            chosenIngredients.push(query);
+            showChosenIngredients();
+            $("#query").val("");
+
+        }
     })
 
     //  Event listener:  click to subtract ingredient from the ingredients array
@@ -136,7 +154,20 @@ $(document).ready(function () {
 
     })
 
-    //  Event listener:  Add the filter if the filter name is clicked
+    //  Event listener: click to subtract filter from the filters array and remove from main view
+    $("#filters-area").on("click", ".chosen-filter", function() {
+        var searchValue = $(this).attr("search-value");
+        for (var i = 0; i < chosenFilters.length; i++){
+            if(chosenFilters[i].filters.includes(searchValue)){
+                var theFiltersWithin = chosenFilters[i].filters;
+                var indexOfChosenFilter = theFiltersWithin.indexOf(searchValue);
+                    theFiltersWithin.splice(indexOfChosenFilter, 1);
+                    showFilters();
+            }
+        }
+    })
+
+    //  Event listener:  Add the filter if the filter name is clicked, remove it if it already is in the array
     $("#filters-modal").on("click", ".filter-button", function () {
         //take the search value of the button
         var filterButtonName = $(this).attr("search-value");
@@ -147,21 +178,21 @@ $(document).ready(function () {
         //trim off the space at the end (annoying bug)
         filterButtonType = filterButtonType.replace(" ", "");
         //for loop to go find a match in the corresponding type
-        for (var i = 0; i < chosenFilters.length; i++){
+        for (var i = 0; i < chosenFilters.length; i++) {
             //to help make it easier to read set chosenType to be the name of the type in the chosenFilters array
             var chosenType = chosenFilters[i].name;
             //if the chosenType is the same as the filterbuttonType then do either one of two things
-            if(chosenType === filterButtonType){
+            if (chosenType === filterButtonType) {
                 //to make it easier to read set the array of filters chosen that is inside that other inside array(confused yet?)
                 var theFiltersWithin = chosenFilters[i].filters;
                 //if the filter exists in the chosenFilters array then take it out of the array
-                if(theFiltersWithin.includes(filterButtonName)){
+                if (theFiltersWithin.includes(filterButtonName)) {
                     var indexOfChosenFilter = theFiltersWithin.indexOf(filterButtonName);
-                    theFiltersWithin.splice(indexOfChosenFilter , 1);
+                    theFiltersWithin.splice(indexOfChosenFilter, 1);
                     makeButtonsFor(filterButtonType);
-                //if the filter doesnt exist in the chosenFilters array then add it to the array
+                    //if the filter doesnt exist in the chosenFilters array then add it to the array
                 } else {
-                    theFiltersWithin.push(filterButtonName);  
+                    theFiltersWithin.push(filterButtonName);
                     makeButtonsFor(filterButtonType);
                 }
             }
@@ -212,6 +243,10 @@ $(document).ready(function () {
         $("#signup-about").val("");
         $("#signup-img-url").val("");
 
+    })
+
+    $("#recipes-modal").on("click", "#add-fav", function() {
+        console.log($(this).attr("recipe-id"));
     })
 
 })

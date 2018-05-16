@@ -65,17 +65,13 @@ function renderResults(res) {
 function renderRecipe(res) {
     $("#recipe-section").empty();
 
+    console.log(res);
+
     var recipeName = res.name;
     var nameDiv = $("<div>");
     var nameH = $("<h4>");
     nameH.text(recipeName);
-    nameDiv.append(nameH);
-
-    var sourceRecipe = res.source.sourceRecipeUrl;
-    var sourceDiv = $("<div>");
-    var sourceA = $("<a>");
-    sourceA.attr("href", sourceRecipe).attr("target", "_blank").text("Click here to get the instructions.");
-    sourceDiv.append(sourceA);
+    nameDiv.append(nameH).addClass("recipe-name");
 
     var image = res.images[0].hostedLargeUrl;
     var imageDiv = $("<div>");
@@ -122,7 +118,21 @@ function renderRecipe(res) {
     timeP.text("Takes about " + totalTime);
     timeDiv.append(timeP);
 
-    $("#recipe-section").append(nameDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv, sourceDiv);
+    var sourceRecipe = res.source.sourceRecipeUrl;
+    var sourceDiv = $("<div>");
+    var sourceA = $("<a>");
+    sourceA.attr("href", sourceRecipe).attr("target", "_blank").text("Click here to get the instructions.");
+    sourceDiv.append(sourceA);
+
+    var recipeId = res.id;
+    var favoritesDiv = $("<div>");
+    var headerFav = $("<h3>");
+    headerFav.text("Add this recipe to your favorites.");
+    var heart = $("<i>");
+    heart.addClass("fas fa-heart fa-3x");
+    favoritesDiv.append(heart, headerFav).attr("recipe-id", recipeId).attr("id" , "add-fav");
+
+    $("#recipe-section").append(nameDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv, sourceDiv, favoritesDiv);
     $("#recipes-modal").show();
 }
 

@@ -41,7 +41,7 @@ h6 {
 
 #results-area {
     padding: 20px 10px;
-    background-color: white;
+    background-color: #fff8dc;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
@@ -104,8 +104,9 @@ h6 {
 }
 
 .main-button {
-    background: #420C3B;
-    color: white;
+    background: rgba(255, 177, 32, 0.938);
+    border-color: #420C3B;
+    color: #420C3B;
 }
 
 
@@ -135,7 +136,7 @@ h6 {
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #d5d5d5;
+    background-color: rgba(255, 177, 32, 0.938);
     margin: 2% auto 15% auto;
     border: 1px solid #888;
     width: 80%;
@@ -189,7 +190,7 @@ h6 {
 }
 
 .login-modal-button {
-    background-color: #420C3B;
+    background-color: rgb(195, 87, 14);
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -206,7 +207,7 @@ h6 {
 .cancelbtn {
     width: auto;
     padding: 10px 18px;
-    background-color: #f44336;
+    background-color: #FF6347;
 }
 
 .acceptbtn {
@@ -224,7 +225,8 @@ span.psw {
     padding-top: 16px;
 }
 .cancel-container, .selection-container {
-    background-color:#f1f1f1
+    background-color:#F0E68C;
+    text-align: center;
 }
 
 
@@ -250,7 +252,7 @@ span.psw {
 
 .filter-button {
     padding: 10px 15px;
-    background-color: forestgreen; 
+    background-color: #FF6347; 
     color: white;
     margin: 5px 0;
     display: inline-block;
@@ -268,12 +270,16 @@ span.psw {
 }
 
 #recipe-section > div {
-    background-color: white;
+    background-color: #fff8dc;
     padding: 15px;
     color: black;
     font-family: 'Pontano Sans', sans-serif;
     text-align: center;
 
+}
+
+#recipe-section > .recipe-name {
+    border-bottom: solid 1px black;
 }
 
 .recipe-modal-ingredients-header {
@@ -289,4 +295,12 @@ span.psw {
 
 .filter-selected {
     background-color: red;
+}
+
+div > #add-fav {
+    color: #ad1400;
+    font-weight: bolder;
+    font-size: 1em;
+    border-top: solid black 1px;
+    background-color: pink;
 }
