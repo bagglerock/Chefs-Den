@@ -115,7 +115,10 @@ function renderRecipe(res) {
     for (var i = 0; i < ingredients.length; i++) {
         var ingredientLi = $("<li>");
         var fontAwesomePlus = $("<i>");
-        fontAwesomePlus.addClass("fas fa-plus ingredient").attr("ingredient-name", ingredients[i]);
+        fontAwesomePlus.addClass("fas fa-plus ingredient")
+            .attr("ingredient-name", ingredients[i])
+            .attr("recipe-id", recipeId)
+            .attr("qty", "1");
         ingredientLi.text(ingredients[i]).append(fontAwesomePlus);
         ingredientsUl.addClass("recipe-modal-ingredients-content").append(ingredientLi);
     }
@@ -173,12 +176,12 @@ $(document).ready(function () {
             type: "POST",
             data: query
         }).then(function (response) {
-            if (response.matches.length > 0){
+            if (response.matches.length > 0) {
                 renderResults(response);
             } else {
                 console.log("there aren't any results");
             }
-            
+
         });
         $("#query").val("");
     })
@@ -190,6 +193,20 @@ $(document).ready(function () {
             type: "GET"
         }).then(function (response) {
             renderRecipe(response);
+        })
+    })
+
+    $("#recipes-modal").on("click", ".ingredient", function() {
+        var newCartItem = {
+            id: $(this).attr("recipe-id"), 
+            name: $(this).attr("ingredient-name"),
+            qty: $(this).attr("qty")
+        }
+        $.ajax("/api/cart/", {
+            type: "POST",
+            data: newCartItem
+        }).then(function(response){
+            console.log(response);
         })
     })
 

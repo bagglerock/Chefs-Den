@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    cart.associate = function (models) {
+    /*cart.associate = function (models) {
         cart.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false
             }
         });
-    };
+    };*/
 
     return cart;
 };

@@ -142,7 +142,7 @@ module.exports = function (app) {
       if (ingredients && ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
-          queryURL += "&allowedIngredient[]=" + ingredients[i] + "+";
+          queryURL += "&allowedIngredient[]=" + ingredients[i];
         }
       }
       //once the ingredients are added to the queryURL, move to add cuisines
@@ -219,4 +219,15 @@ module.exports = function (app) {
       }
     );
   });
+
+  app.post("/api/cart/", function (req, res) {
+    var newCartItem = {
+      recipeId: req.body.id,
+      ingredientName: req.body.name,
+      qty: req.body.qty
+    }
+    db.Cart.create(newCartItem).then(function(newItem){
+      res.json(newItem);
+    })
+  })
 }
