@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     background-color: #733f34;
     height: 100%;
 }
@@ -18,6 +19,8 @@ h6 {
     font-size: 20px;
 }
 
+/* Container */
+
 .wrapper {
     display: grid;
     grid-template-rows: 10fr 1fr;
@@ -32,30 +35,14 @@ h6 {
     background-image: url("../img/basil-delicious-food-459469.jpg");
     display: grid;
     grid-template-rows: 1fr 4fr;
-    border-bottom: solid 10px rgba(255, 177, 32, 0.938); 
+    border-bottom: solid 10px rgba(255, 177, 32, 0.938);
 }
 
-.hero > div {
+.hero>div {
     color: white;
 }
 
-#results-area {
-    padding: 20px 10px;
-    background-color: #fff8dc;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
-
-}
-
-.result {
-    font-family: 'Pontano Sans', sans-serif;
-    border: solid black 1px;
-    padding: 10px 20px;
-    background-color: #fafafa;
-    color: black;
-    text-align: center;
-}
+/* Header Section */
 
 .header {
     display: grid;
@@ -66,25 +53,25 @@ h6 {
     grid-column: 2 / 3;
     padding-top: 20px;
     text-align: center;
-    
 }
 
-.login {
-    grid-column: 3 / 4;
-    text-align: right;
-    padding: 10px 10px 10px 0;;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-
-
-.title > h1 {
+.title>h1 {
     font-family: 'Great Vibes', cursive;
     font-size: 100px;
     color: white;
     text-shadow: 5px 5px rgba(255, 177, 32, 0.938);
 }
+
+.login {
+    grid-column: 3 / 4;
+    text-align: right;
+    padding: 10px 10px 10px 0;
+    ;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Main Section */
 
 .main {
     text-align: center;
@@ -93,7 +80,8 @@ h6 {
     grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 
-.main-input, .main-button {
+.main-input,
+.main-button {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -109,8 +97,26 @@ h6 {
     color: #420C3B;
 }
 
+/* Results */
 
-/** Modal Stuff **/
+#results-area {
+    padding: 20px 10px;
+    background-color: #fff8dc;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.result {
+    font-family: 'Pontano Sans', sans-serif;
+    border: solid black 1px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: black;
+    text-align: center;
+}
+
+/** General Modal Stuff **/
 
 .modal {
     display: none;
@@ -133,8 +139,6 @@ h6 {
     /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
-
 .modal-content {
     background-color: rgba(255, 177, 32, 0.938);
     margin: 2% auto 15% auto;
@@ -143,24 +147,38 @@ h6 {
     color: black;
 }
 
-/* The Close Button */
-
-.close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
+.close-container {
+    background-color: #F0E68C;
+    text-align: center;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: auto auto;
 }
 
-.close:hover,
-.close:focus {
-    color: red;
+.modal-button {
+    background-color: rgb(44, 195, 14);
+    color: white;
+    padding: 14px 40px;
+    margin: 8px 0;
+    border: none;
     cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
-/* Animate for the modal */
+.modal-button:hover {
+    opacity: 0.8;
+}
+
+.accept {
+    background-color: rgb(50, 214, 50);
+}
+
+.cancel {
+    background-color: #e25f4e
+}
+
+/* Animation for the modal */
 
 .animate {
     -webkit-animation: animatezoom 0.6s;
@@ -168,100 +186,107 @@ h6 {
 }
 
 @-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
 }
-    
+
 @keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 
 /* Login Modal styling */
 
-.login-modal-input{
+#login-container {
+    padding: 25px 20%;
+    line-height: 40px;
+
+}
+
+.login-modal-input {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 5px;
+    padding: 10px 20px;
 }
 
-.login-modal-button {
-    background-color: rgb(195, 87, 14);
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
+
+/* Signup Modal Styling */
+
+#signup-container>div {
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+#signup-top-section {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#signup-container {
+    padding: 20px;
+}
+
+.signup-inner {
+    line-height: 30px;
+}
+
+.signup-labels {
+    font-family: 'Poiret One', cursive;
+    font-weight: bold;
+}
+
+#signup-info-section,
+#signup-image-section,
+#signup-bottom-section {
+    padding: 10px;
+}
+
+#signup-info-section>ul>li>input,
+#signup-bottom-section>textarea,
+#signup-image-section>input {
+    font-family: 'Pontano Sans', sans-serif;
     width: 100%;
-    border-radius: 5px;
+    padding: 5px 0;
+    resize: none;
+    overflow: hidden;
 }
-
-.login-modal-button:hover {
-    opacity: 0.8;
-}
-
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #FF6347;
-}
-
-.acceptbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: blue;
-}
-
-.login-container {
-    padding: 16px;
-}
-
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-.cancel-container, .selection-container {
-    background-color:#F0E68C;
-    text-align: center;
-}
-
 
 /* Filters Modal Styling */
-
 
 .filters-container {
     padding: 10px;
 }
 
-.selection-container {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-
-.accept {
-    text-align: left;
-}
-
-.cancel {
-    text-align: right;
-}
-
 .filter-button {
     padding: 10px 15px;
-    background-color: #FF6347; 
+    background-color: #FF6347;
     color: white;
-    margin: 5px 0;
+    margin: 5px;
     display: inline-block;
     border: 1px solid white;
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 15px;
-
 }
+
+.filter-selected {
+    background-color: red;
+}
+
+.filter-close-container {
+    background-color: #F0E68C;
+    text-align: center;
+    padding: 16px;
+}
+
+/*  Recipe Section */
 
 #recipe-section {
     display: grid;
@@ -269,42 +294,53 @@ span.psw {
     margin: 10px;
 }
 
-#recipe-section > div {
+#recipe-section>div {
     background-color: #fff8dc;
     padding: 15px;
     color: black;
     font-family: 'Pontano Sans', sans-serif;
     text-align: center;
-
 }
 
-#recipe-section > .recipe-name {
+#recipe-section>.recipe-name {
     border-bottom: solid 1px black;
 }
+
+/* Recipe Result */
 
 .recipe-modal-ingredients-header {
     font-family: 'Pontano Sans', sans-serif;
     font-size: 24px;
-    padding: 5px 0 ;
+    padding: 5px 0;
 }
 
-.filter-selected {
-    background-color: red;
+div>#add-fav {
+    text-align: right;
+    color: #ad1400;
+    font-weight: bolder;
+    font-size: 1em;
+    border-top: solid black 1px;
 }
 
 .ingredient {
     padding: 10px;
 }
 
-.recipe-modal-ingredients-header > p{
+.recipe-modal-ingredients-header>p {
     font-size: 12px;
 }
 
-#recipe-section > #fav-share-section {
+#recipe-section>#fav-share-section {
     text-align: right;
 }
 
-#recipe-section > #fav-share-section > .fav-div-properties > li{
+#recipe-section>#fav-share-section>.fav-div-properties>li {
     display: inline-block;
     padding: 5px;
+}
+
+/*  Other */
+
+.logged-in-divs {
+    display: none;
 }

@@ -1,0 +1,54 @@
+<div id="signup-modal" class="modal">
+
+    <div class="modal-content animate">
+        <form id="signup-form" autocomplete="on">
+            <div id="signup-container">
+                <div id="signup-top-section">
+                    <div id="signup-info-section" class="signup-inner">
+                        <ul>
+                            <li>
+                                <label class="signup-labels" for="username">
+                                    Username
+                                </label>
+                                <input type="text" placeholder="Enter Username" name="username" id="signup-username" autocomplete="on" required>
+                            </li>
+                            <li>
+                                <label class="signup-labels" for="email">
+                                    Email
+                                </label>
+                                <input type="text" placeholder="Enter Email" name="email" id="signup-email" autocomplete="email" required>
+                            </li>
+                            <li>
+                                <label class="signup-labels" for="password">
+                                    Password
+                                </label>
+                                <input type="password" placeholder="Enter Password" name="signup-password" id="signup-password" autocomplete="off" required>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="signup-image-section" class="signup-inner">
+                        <label class="signup-labels" for="image">
+                            Image URL
+                        </label>
+                        <input type="text" placeholder="Enter Image URL" name="img-url" id="signup-img-url" autocomplete="on">
+                    </div>
+                </div>
+                <div id="signup-bottom-section" class="signup-inner">
+                    <label class="signup-labels" for="about">
+                        About
+                    </label>
+                    <textarea type="text" placeholder="Enter About Me" name="about" id="signup-about" rows="4" maxlength="255" wrap="off" autocomplete="on"></textarea>
+                </div>
+            </div>
+            <div class="close-container login-button-container">
+                <div>
+                    <button class="modal-button accept" type="submit" id="signup-button">Sign Up</button>
+                </div>
+                <div>
+                    <button class="modal-button cancel" type="button" id="signup-cancel" >Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

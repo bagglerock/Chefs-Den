@@ -118,7 +118,7 @@ $(document).ready(function () {
     });
 
     //  Event listener:  click to close modal when cancel is clicked
-    $(".cancelbtn").on("click", function () {
+    $(".cancel").on("click", function () {
         $(".modal").hide();
     })
 
@@ -200,7 +200,7 @@ $(document).ready(function () {
     })
 
     //  Event listener:  click to send login information
-    $("#login").on("click", function (event) {
+    $("#login-button").on("click", function (event) {
         event.preventDefault();
         var loginInfo = {
             username: $("#login-username").val().trim(),
@@ -246,7 +246,23 @@ $(document).ready(function () {
     })
 
     $("#recipes-modal").on("click", "#add-favorite", function() {
-        console.log($(this).attr("recipe-id"));
+        var recipeId = $(this).attr("recipe-id");
+        var recipeName = $(this).attr("recipe-name");
+        var recipeImage = $(this).attr("image");
+
+        var data = {
+            id : recipeId,
+            name: recipeName,
+            image: recipeImage
+        }
+        $.ajax("/api/favorites/", {
+            type: "POST",
+            data: data
+
+        }).then(function () {
+            console.log("Sent favorite data");
+            //do something to change the heart color or something
+        })
     })
 
     $("#recipes-modal").on("click", "#share-favorite", function() {

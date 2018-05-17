@@ -8,29 +8,12 @@
             <div class="title">
                 <h1>Chef's Den</h1>
             </div>
-            <div class="login">
-                <div>
-                    <h6 class="login-buttons" id="open-signup-modal">sign up</h6>
-                </div>
-                <div>
-                    <h6 class="login-buttons" id="open-login-modal">login</h6>
-                </div>
-            </div>
+            {{>header/nav-block}}
         </div>
 
         <div class="main">
-            <div class="search-section">
-                <input class="main-input" type="text" placeholder="Search..." id="query">
-                <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
-                <button class="main-button" type="button" id="open-filters-modal">Filters</button>
-                <button class="main-button" type="button" id="search-button">Search</button>
-            </div>
-            <div id="ingredients-area"></div>
-            <div id="filters-area"></div>
-
+            {{>main/search-block}}
         </div>
-
-
 
     </div>
 
@@ -39,100 +22,10 @@
 
 </div>
 
+
 <!--  Modals  -->
 
-<div id="login-modal" class="modal">
-
-    <form class="modal-content animate">
-        <div class="login-container">
-            <label for="username">
-                <b>Username</b>
-            </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="login-username" required>
-            <label for="password">
-                <b>Password</b>
-            </label>
-            <input class="login-modal-input" type="password" placeholder="Enter Password" name="password" id="login-password" required>
-            <button class="login-modal-button" type="submit" id="login">Login</button>
-        </div>
-
-        <div class="login-container cancel-container">
-            <button class="login-modal-button cancelbtn" type="button">Cancel</button>
-        </div>
-    </form>
-
-</div>
-
-<div id="signup-modal" class="modal">
-
-    <form class="modal-content animate">
-        <div class="login-container">
-            <label for="username">
-                <b>Username</b>
-            </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="signup-username" required>
-            <label for="email">
-                <b>Email</b>
-            </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Email" name="email" id="signup-email" required>
-            <label for="password">
-                <b>Password</b>
-            </label>
-            <input class="login-modal-input" type="password" placeholder="Enter Password" name="signup-password" id="signup-password"
-                required>
-            <label for="about">
-                <b>About</b>
-            </label>
-            <input class="login-modal-input" type="text" placeholder="Enter About Me" name="about" id="signup-about" required>
-            <label for="image">
-                <b>Image URL</b>
-            </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Image URL" name="img-url" id="signup-img-url" required>
-            <button id="signup-button" class="login-modal-button" type="submit">Sign Up</button>
-        </div>
-
-        <div class="login-container cancel-container">
-            <button class="login-modal-button cancelbtn" id="signup-cancel" type="button">Cancel</button>
-        </div>
-    </form>
-
-</div>
-
-<div id="filters-modal" class="modal">
-
-    <div class="modal-content animate">
-        <div class="filters-container cuisines-section">
-            <h5 class="filter-title">Cuisine</h5>
-            <span id="cuisines-content"></span>
-        </div>
-        <div class="filters-container diet-section">
-            <h5 class="filter-title">Diets</h5>
-            <span id="diets-content"></span>
-        </div>
-        <div class="filters-container intolerances-section">
-            <h5 class="filter-title">Intolerances</h5>
-            <span id="intolerances-content"></span>
-        </div>
-        <div class="filters-container selection-container">
-            <div class="cancel">
-                <button class="login-modal-button cancelbtn" type="button" id="filters-close">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div id="recipes-modal" class="modal">
-
-    <div class="modal-content animate">
-        <div id="recipe-section"></div>
-
-        <div class="filters-container selection-container">
-            <div class="cancel">
-                <button class="login-modal-button cancelbtn" type="button" id="filters-close">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
+{{>modals/login-block}} 
+{{>modals/signup-block}} 
+{{>modals/filters-block}} 
+{{>modals/recipes-block}}

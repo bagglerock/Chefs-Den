@@ -64,6 +64,8 @@ function renderResults(res) {
 function renderRecipe(res) {
     $("#recipe-section").empty();
 
+    var image = res.images[0].hostedLargeUrl;
+    var recipeName = res.name;
     var sourceRecipe = res.source.sourceRecipeUrl;
 
     var recipeId = res.id;
@@ -71,22 +73,24 @@ function renderRecipe(res) {
     var favDivUl = $("<ul>");
     var heartLi = $("<li>");
     var heart = $("<i>");
-    heart.addClass("fas fa-heart fa-3x").attr("recipe-id", recipeId).attr("id", "add-favorite");
-    heartLi.append(heart).attr("id" , "add-fav");
+    heart.addClass("fas fa-heart fa-3x")
+        .attr("recipe-id", recipeId)
+        .attr("id", "add-favorite")
+        .attr("image", image)
+        .attr("recipe-name", recipeName);
+    heartLi.append(heart).attr("id", "add-fav");
     var shareLi = $("<li>");
     var share = $("<i>");
     share.addClass("fas fa-share-alt-square fa-3x").attr("recipe-id", sourceRecipe).attr("id", "share-favorite");
-    shareLi.append(share).attr("id" , "share-fav");
+    shareLi.append(share).attr("id", "share-fav");
     favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
     favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
 
-    var recipeName = res.name;
     var nameDiv = $("<div>");
     var nameH = $("<h4>");
     nameH.text(recipeName);
     nameDiv.append(nameH).addClass("recipe-name");
 
-    var image = res.images[0].hostedLargeUrl;
     var imageDiv = $("<div>");
     var img = $("<img>");
     img.attr("src", image);
@@ -165,12 +169,16 @@ $(document).ready(function () {
                 });
             }
         }
-
         $.ajax("/recipes/", {
             type: "POST",
             data: query
         }).then(function (response) {
-            renderResults(response);
+            if (response.matches.length > 0){
+                renderResults(response);
+            } else {
+                console.log("there aren't any results");
+            }
+            
         });
         $("#query").val("");
     })
