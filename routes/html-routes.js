@@ -70,4 +70,14 @@ module.exports = function (app) {
     });
   })
 
+  app.get("/cart", function (req, res) {
+    db.Cart.findAll().then(function(cartItems){
+      console.log(cartItems);
+      var hbsObject = {
+        cartItems: cartItems
+      };
+      res.render("cart", hbsObject);
+    })
+  });
+
 };
