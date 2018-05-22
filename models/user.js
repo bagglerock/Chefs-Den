@@ -1,4 +1,5 @@
 var bcrypt = require("bcrypt-nodejs");
+var userfavs = require("./userfavs");
 
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
@@ -6,9 +7,6 @@ module.exports = function (sequelize, DataTypes) {
         userName: {
             type: DataTypes.STRING,
             unique: true,
-            validate: {
-                isUsername: true
-            }
         },
         // The email cannot be null, and must be a proper email before creation
         email: {
@@ -35,12 +33,17 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         }
-        
+
     });
 
-    // cart.hasMany(models.User, {
-    //     onDelete: "cascade"
-    // });
+    User.associate = function (models) {
+        User.hasMany(models.Favorite, {
+            // through: {
+            //     model: userfavs
+            // }
+        });
+    }
+
 
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);

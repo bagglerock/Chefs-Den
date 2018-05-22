@@ -12,6 +12,7 @@ module.exports = function (app) {
   });
 
   //route for displaying favorites page
+  /*
   app.get("api/favorites", function (req, res) {
     db.Favorite.findAll({})
       .then(function (dbFavorite) {
@@ -19,8 +20,10 @@ module.exports = function (app) {
       });
 
   });
+  */
 
   //to delete a favorited item
+  /*
   app.delete("/api/favorites/:id", function (req, res) {
     db.Favorite.destroy({
       where: {
@@ -30,32 +33,42 @@ module.exports = function (app) {
       res.json(dbFavorite);
     });
   });
+  */
 
   //========================================
 
   //user profile routes. 
 
-  //to show the user when user clicks on show profile. Writing this as api route for checking. eventually this needs to be written as html route
-  app.get("/api/user/:id", function (req, res) {
+  //to show the user when user clicks on show profile. 
+  app.get("/user/:id", function (req, res) {
+   
     db.User.findOne({
       where: {
         id: req.params.id
       }
-    }).then(function (dbUser) {
-      res.json(dbUser);
+    }).then(function (user) {
+      console.log(user.dataValues);
+      var data = user.dataValues;
+       var hbsObject = {
+         userName: data.userName,
+         email: data.email,
+         img_url: data.img_url,
+         password: data.password
+       }
+      res.render("favorite", hbsObject);
     });
   });
 
-  //To update an user information. Writing this as api route for checking. eventually this needs to be written as html route
-  app.put("/api/user", function (req, res){
+  //To update an user information. 
+  app.put("/user/:id", function (req, res){
     db.User.update(req.body, 
       {
       where:{
         id: req.body.id
       }
     })
-    .then (function(dbUser){
-      res.json(dbUser);
+    .then (function(user){
+      res.render("favorite", user);
     })
   })
 
@@ -65,8 +78,8 @@ module.exports = function (app) {
       where: {
         id: req.params.id
       }
-    }).then(function (dbUser) {
-      res.json(dbUser);
+    }).then(function (user) {
+      res.json("id: "+res.insertId);
     });
   })
 
@@ -80,4 +93,16 @@ module.exports = function (app) {
     })
   });
 
+  app.get("/favorite/:id", function (req, res) {
+    var user = {
+      id: req.params.id
+    }
+    db.User.findOne(user).then(function(data){
+      var hbsObject = {
+        data: data.dataValues
+      }
+      res.render("favorite", hbsObject);
+    })
+  });
+  
 };

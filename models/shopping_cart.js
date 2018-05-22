@@ -14,18 +14,8 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    /*cart.associate = function (models) {
-        cart.belongsTo(models.User, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        cart.hasMany(models.Favorite, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };*/
+
+    
 
     return cart;
 };

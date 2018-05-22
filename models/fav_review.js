@@ -1,3 +1,5 @@
+var userfavs = require("./userfavs");
+
 module.exports = function (sequelize, DataTypes) {
     var Favorite = sequelize.define("Favorite", {
         fav: {
@@ -7,8 +9,8 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-       recipe_img: {
-        type: DataTypes.STRING,
+        recipe_img: {
+            type: DataTypes.STRING,
         },
         review: {
             type: DataTypes.TEXT,
@@ -19,26 +21,25 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
         },
         foreignKey: {
-            type: DataTypes.STRING,
+            type:DataTypes.STRING
         },
         recipe_id: {
-            type:DataTypes.STRING
-        }, 
-        recipe_title: {
-            type: DataTypes.TEXT
+            type: DataTypes.STRING
         }
+        // recipe_title: {
+        //     type: DataTypes.TEXT
+        // }
     });
 
     Favorite.associate = function (models) {
-        Favorite.hasMany(models.Favorite, {
-            onDelete: "cascade"
-        });
         Favorite.belongsTo(models.User, {
+            // through: {
+            //     model: userfavs
+            // }
             foreignKey: {
                 allowNull: false
             }
         });
-    };
-
+    }
     return Favorite;
 };

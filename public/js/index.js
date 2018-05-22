@@ -63,11 +63,11 @@ function showChosenIngredients() {
     }
 }
 
-function showFilters(){
+function showFilters() {
     $("#filters-area").empty();
-    for (var i = 0; i < chosenFilters.length; i++){
-        if (chosenFilters[i].filters.length > 0){
-            for (var j = 0; j < chosenFilters[i].filters.length; j++){
+    for (var i = 0; i < chosenFilters.length; i++) {
+        if (chosenFilters[i].filters.length > 0) {
+            for (var j = 0; j < chosenFilters[i].filters.length; j++) {
                 var thisFilter = chosenFilters[i].filters[j];
                 var button = $("<button>");
                 button.text(cleanSearchValue(thisFilter)).addClass("filter-button fas fa-trash chosen-filter");
@@ -155,14 +155,14 @@ $(document).ready(function () {
     })
 
     //  Event listener: click to subtract filter from the filters array and remove from main view
-    $("#filters-area").on("click", ".chosen-filter", function() {
+    $("#filters-area").on("click", ".chosen-filter", function () {
         var searchValue = $(this).attr("search-value");
-        for (var i = 0; i < chosenFilters.length; i++){
-            if(chosenFilters[i].filters.includes(searchValue)){
+        for (var i = 0; i < chosenFilters.length; i++) {
+            if (chosenFilters[i].filters.includes(searchValue)) {
                 var theFiltersWithin = chosenFilters[i].filters;
                 var indexOfChosenFilter = theFiltersWithin.indexOf(searchValue);
-                    theFiltersWithin.splice(indexOfChosenFilter, 1);
-                    showFilters();
+                theFiltersWithin.splice(indexOfChosenFilter, 1);
+                showFilters();
             }
         }
     })
@@ -200,58 +200,105 @@ $(document).ready(function () {
     })
 
     //  Event listener:  click to send login information
-    $("#login-button").on("click", function (event) {
+    var loginForm = $("form#login-form");
+    var userName = $("input#login-username");
+    var password = $("input#login-password");
+
+    // When the form is submitted, we validate there's an username and password entered
+    loginForm.on("submit", function (event) {
         event.preventDefault();
         var loginInfo = {
-            username: $("#login-username").val().trim(),
-            password: $("#login-password").val().trim()
+            userName: userName.val().trim(),
+            password: password.val().trim()
         }
-        $.ajax("/api/login", {
-            type: "POST",
-            data: loginInfo
 
-        }).then(function () {
-            console.log("User is logging in");
-            location.reload();
-        })
+        if (!loginInfo.userName || !loginInfo.password) {
+            return;
+        } 
+
+        loginUser(loginInfo.userName, loginInfo.password);
         $("#login-username").val("");
         $("#login-password").val("");
-    })
+    });
 
+    function loginUser(userName, password){
+        $.post("/api/login", {
+            userName: userName,
+            password: password
+        }).then(function(data){
+            $("#login-modal").hide();
+            window.location.assign("/favorite/" + data.id);
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
     //  Event listener:  click to send signup information
-    $("#signup-button").on("click", function (event) {
+
+    var signUpForm = $("form#signup-form");
+    var userNameInput = $("input#signup-username");
+    var emailInput = $("input#signup-email");
+    var passwordInput = $("input#signup-password");
+    var aboutInput = $("textarea#signup-about");
+
+    signUpForm.on("submit", function (event) {
         event.preventDefault();
+        // Use FormData constructor to build a new multipart form (for handling images)
+        var formData = new FormData();
+        // append username to form (email: 'alex@alex.com')
+        formData.append("userName", userNameInput.val().trim());
+        // append password to form (password: '12345')
+        formData.append("password", passwordInput.val().trim());
+        // append email to form (password: '12345')
+        formData.append("email", emailInput.val().trim());
+        // append about me to form (password: '12345')
+        formData.append("about", aboutInput.val().trim());
 
-        var newUser = {
-            username: $("#signup-username").val().trim(),
-            email: $("#signup-email").val().trim(),
-            password: $("#signup-password").val().trim(),
-            about: $("#signup-about").val().trim(),
-            img_url: $("#signup-img-url").val().trim()
+        if ($("#signup-img-url").prop("files")[0]) {
+            // append photo information to form (photo: {objOfPhotoInfo})
+            formData.append("photo", $("#signup-img-url").prop("files")[0], $("#signup-img-url").prop("files")[0].name);
         }
-        $.ajax("/api/user", {
-            type: "POST",
-            data: newUser
-        }).then(function () {
-            console.log("User has been added.");
-            location.reload();
-        })
+        console.log($("#signup-img-url").prop("files"));
 
-        $("#signup-username").val("");
-        $("#signup-email").val("");
-        $("#signup-password").val("");
-        $("#signup-about").val("");
-        $("#signup-img-url").val("");
+        // if (!userData.email || !userData.password) {
+        //   return;
+        // }
+        // If we have an email and password, run the signUpUser function
+        signUpUser(formData);
+        userNameInput.val("");
+        passwordInput.val("");
+        emailInput.val("");
+    });
 
-    })
+    // Does a post to the signup route. If successful, we are redirected to the favorites page
+    // Otherwise we log any errors
+    function signUpUser(formData) {
+        $.ajax({
+            url: "/api/user",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+        }).then(function (data) {
+            // console.log(data);
+            window.location.replace(data)
+            // If there's an error, handle it by throwing up alert
+        }).catch(handleLoginErr);
+    }
 
-    $("#recipes-modal").on("click", "#add-favorite", function() {
+    function handleLoginErr(err) {
+        console.log(err);
+        $("#alert .msg").text(err);
+        $("#alert").fadeIn(500);
+    }
+
+    $("#recipes-modal").on("click", "#add-favorite", function () {
         var recipeId = $(this).attr("recipe-id");
         var recipeName = $(this).attr("recipe-name");
         var recipeImage = $(this).attr("image");
 
         var data = {
-            id : recipeId,
+            id: recipeId,
             name: recipeName,
             image: recipeImage
         }
@@ -265,9 +312,9 @@ $(document).ready(function () {
         })
     })
 
-    $("#recipes-modal").on("click", "#share-favorite", function() {
+    $("#recipes-modal").on("click", "#share-favorite", function () {
         console.log($(this).attr("recipe-id"));
     })
 
 
-})
+});
