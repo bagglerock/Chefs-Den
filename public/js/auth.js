@@ -64,9 +64,6 @@ $(document).ready(function(){
         }
         console.log($("#signup-img-url").prop("files"));
 
-        if (!userData.email || !userData.password) {
-          return;
-        }
         // If we have an email and password, run the signUpUser function
         signUpUser(formData);
         userNameInput.val("");
