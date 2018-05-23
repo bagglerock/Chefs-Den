@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         // The user name cannot be null, and must be a proper user name before creation
         userName: {
             type: DataTypes.STRING,
-            unique: true,
+            unique: true
         },
         // The email cannot be null, and must be a proper email before creation
         email: {
@@ -35,16 +35,10 @@ module.exports = function (sequelize, DataTypes) {
         }
 
     });
-
     User.associate = function (models) {
-        User.hasMany(models.Favorite, {
-            // through: {
-            //     model: userfavs
-            // }
-        });
+        User.hasMany(models.Favorite);
+        User.hasMany(models.Cart);
     }
-
-
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };

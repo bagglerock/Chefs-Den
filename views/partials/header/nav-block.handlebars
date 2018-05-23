@@ -1,14 +1,17 @@
 <div class="login">
-    <div class="logged-out-divs">
+    <div class="logged-out-divs" {{{userFalse}}}>
         <h6 class="login-buttons" id="open-signup-modal">sign up</h6>
     </div>
-    <div class="logged-out-divs">
+    <div class="logged-out-divs" {{{userFalse}}}>
         <h6 class="login-buttons" id="open-login-modal">login</h6>
     </div>
-    <div class="logged-in-divs">
+    <div class="logged-in-divs" {{{userTrue}}}>
         <h6 class="login-buttons" id="open-favorite-page">favorites</h6>
     </div>
-    <div class="logged-in-divs">
+    <div class="logged-in-divs" {{{userTrue}}}>
         <h6 class="login-buttons" id="open-cart-page">shopping cart</h6>
+    </div>
+    <div class="logged-in-divs" {{{userTrue}}}>
+        <h6 class="login-buttons" id="log-out">log out</h6>
     </div>
 </div>

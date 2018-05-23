@@ -206,7 +206,6 @@ $(document).ready(function () {
             type: "POST",
             data: newCartItem
         }).then(function(response){
-            console.log(response);
         })
     })
 

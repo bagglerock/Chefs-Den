@@ -24,9 +24,7 @@ cloudinary.config({
 	cloud_name: cloudname,
 	api_key: cloudapi_key,
 	api_secret: cloudapi_secret
-});
-
-
+  });
 
 function fixImage(resObject) {
 	if (resObject) {
@@ -59,18 +57,16 @@ module.exports = function (app) {
 		var form = new formidable.IncomingForm();
 
 		form.parse(req, function (err, fields, files) {
-			console.log(fields);
-			console.log(files.photo);
 
 			if (files.photo) {
 				// upload file to cloudinary, which'll return an object for the new image
 				cloudinary.uploader.upload(files.photo.path, function (result) {
-					console.log(result);
 					db.User.create({
 						userName: fields.userName,
 						email: fields.email,
 						password: fields.password,
-						photo: result.secure_url
+						img_url: result.secure_url, 
+						about: fields.about
 					}).then(function (userInfo) {
 						// Upon successful signup, log user in
 						req.login(userInfo, function (err) {
@@ -78,8 +74,7 @@ module.exports = function (app) {
 								console.log(err)
 								return res.status(422).json(err);
 							}
-							console.log(req.user);
-							res.json("favorite", userInfo);
+							res.render("profile", userInfo);
 						});
 					}).catch(function (err) {
 						console.log(err)
@@ -91,6 +86,7 @@ module.exports = function (app) {
 					userName: fields.userName,
 					email: fields.email,
 					password: fields.password,
+					about: fields.about
 				}).then(function (userInfo) {
 					// Upon successful signup, log user in
 					req.login(userInfo, function (err) {
@@ -98,13 +94,12 @@ module.exports = function (app) {
 							console.log(err)
 							return res.status(422).json(err);
 						}
-						console.log(JSON.stringify(userInfo));
 						var hbsInfo = {
 							userName: (JSON.stringify(userInfo)).userName,
 							email: (JSON.stringify(userInfo)).email,
 							about: (JSON.stringify(userInfo)).about
 						}
-						return res.render("favorite", hbsInfo);
+						return res.render("profile", hbsInfo);
 					});
 				}).catch(function (err) {
 					console.log(err);
@@ -118,52 +113,9 @@ module.exports = function (app) {
 	// Route for logging user out
 	app.get("/logout", function (req, res) {
 		req.logout();
-		res.redirect("/");
-	});
-
-	app.get("/api/user_data", function (req, res) {
-		if (!req.user) {
-			// The user is not logged in, send back an empty object
-			res.json({});
-		} else {
-			// Otherwise send back the user's email and id
-			// Sending back a password, even a hashed password, isn't a good idea
-			res.json({
-				email: req.user.email,
-				id: req.user.id,
-				photo: req.user.photo
-			});
-		}
-	});
-
-	//==============================
-	//html routes for user auth process
-
-	//===============================
-
-	app.get("/", function (req, res) {
-		// If the user already has already logged in, send them to the favorite page
-		if (req.user) {
-			return res.redirect("/favorite");
-		}
 		res.render("index");
 	});
 
-	app.get("/login", function (req, res) {
-		// If the user already has an account send them to the favorite page
-		if (req.user) {
-			return res.redirect("/favorite");
-		}
-		res.render("index");
-	});
 
-	// Here we've add our isAuthenticated middleware to this route.
-	// If a user who is not logged in tries to access this route they will be redirected to the signup page
-	app.get("/favorites", isAuthenticated, function (req, res) {
-		db.favorites.findAll().then(function (favorite) {
-			res.render("favorite", user);
-		});
-
-	});
 
 }

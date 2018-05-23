@@ -1,6 +1,7 @@
-module.exports = function (sequelize, DataTypes) {
-    var cart = sequelize.define("Cart", {
+var userfavs = require("./userfavs");
 
+module.exports = function (sequelize, DataTypes) {
+    var Cart = sequelize.define("Cart", {
         recipeId: {
             type: DataTypes.STRING
         }, 
@@ -14,8 +15,13 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    Cart.associate = function (models) {
+        Cart.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+    }
 
-    
-
-    return cart;
+    return Cart;
 };

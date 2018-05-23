@@ -1,11 +1,15 @@
-<div>
-    {{#each cartItems}}
-    <p>
+
+
+
+<div class="cart-wrapper">
+    <div id="cart-header"><h4>Cart Items:</h4></div>
+    <div class="cart-item">
+        {{#each cartItems}}
         <ul>
-            <li>Name: {{ingredientName}}</li>
-            <li>Belongs to: {{recipeId}}</li>
-            <li>Quantity: {{qty}}</li>
+            <li>Name: {{dataValues.ingredientName}}</li>
+            <li>Quantity: {{dataValues.qty}}</li>
         </ul>
-    </p>
-    {{/each}}
+        {{/each}}
+
+    </div>
 </div>

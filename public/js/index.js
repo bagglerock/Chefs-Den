@@ -81,6 +81,7 @@ function showFilters() {
 
 $(document).ready(function () {
 
+
     //  Event listener: hovering over the buttons in the login area
     $(".login-buttons").hover(
         (function () {
@@ -94,11 +95,13 @@ $(document).ready(function () {
     //  Event listener:  click to open login modal
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();
+        $("#login-error").empty();
     })
 
     //  Event listener:  click to open sign-up modal
     $("#open-signup-modal").on("click", function () {
         $("#signup-modal").show();
+        $("#signup-error").empty();
     })
 
     //  Event listener: click to close(hide) the modal
@@ -199,103 +202,11 @@ $(document).ready(function () {
         }
     })
 
-    //  Event listener:  click to send login information
-    var loginForm = $("form#login-form");
-    var userName = $("input#login-username");
-    var password = $("input#login-password");
-
-    // When the form is submitted, we validate there's an username and password entered
-    loginForm.on("submit", function (event) {
-        event.preventDefault();
-        var loginInfo = {
-            userName: userName.val().trim(),
-            password: password.val().trim()
-        }
-
-        if (!loginInfo.userName || !loginInfo.password) {
-            return;
-        } 
-
-        loginUser(loginInfo.userName, loginInfo.password);
-        $("#login-username").val("");
-        $("#login-password").val("");
-    });
-
-    function loginUser(userName, password){
-        $.post("/api/login", {
-            userName: userName,
-            password: password
-        }).then(function(data){
-            $("#login-modal").hide();
-            window.location.assign("/favorite/" + data.id);
-        }).catch(function(err){
-            console.log(err);
-        });
-    }
-    //  Event listener:  click to send signup information
-
-    var signUpForm = $("form#signup-form");
-    var userNameInput = $("input#signup-username");
-    var emailInput = $("input#signup-email");
-    var passwordInput = $("input#signup-password");
-    var aboutInput = $("textarea#signup-about");
-
-    signUpForm.on("submit", function (event) {
-        event.preventDefault();
-        // Use FormData constructor to build a new multipart form (for handling images)
-        var formData = new FormData();
-        // append username to form (email: 'alex@alex.com')
-        formData.append("userName", userNameInput.val().trim());
-        // append password to form (password: '12345')
-        formData.append("password", passwordInput.val().trim());
-        // append email to form (password: '12345')
-        formData.append("email", emailInput.val().trim());
-        // append about me to form (password: '12345')
-        formData.append("about", aboutInput.val().trim());
-
-        if ($("#signup-img-url").prop("files")[0]) {
-            // append photo information to form (photo: {objOfPhotoInfo})
-            formData.append("photo", $("#signup-img-url").prop("files")[0], $("#signup-img-url").prop("files")[0].name);
-        }
-        console.log($("#signup-img-url").prop("files"));
-
-        // if (!userData.email || !userData.password) {
-        //   return;
-        // }
-        // If we have an email and password, run the signUpUser function
-        signUpUser(formData);
-        userNameInput.val("");
-        passwordInput.val("");
-        emailInput.val("");
-    });
-
-    // Does a post to the signup route. If successful, we are redirected to the favorites page
-    // Otherwise we log any errors
-    function signUpUser(formData) {
-        $.ajax({
-            url: "/api/user",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-        }).then(function (data) {
-            // console.log(data);
-            window.location.replace(data)
-            // If there's an error, handle it by throwing up alert
-        }).catch(handleLoginErr);
-    }
-
-    function handleLoginErr(err) {
-        console.log(err);
-        $("#alert .msg").text(err);
-        $("#alert").fadeIn(500);
-    }
-
     $("#recipes-modal").on("click", "#add-favorite", function () {
         var recipeId = $(this).attr("recipe-id");
         var recipeName = $(this).attr("recipe-name");
         var recipeImage = $(this).attr("image");
+        console.log(recipeId);
 
         var data = {
             id: recipeId,
@@ -308,13 +219,60 @@ $(document).ready(function () {
 
         }).then(function () {
             console.log("Sent favorite data");
+            $("#add-favorite").css("color", "red");
             //do something to change the heart color or something
         })
     })
 
     $("#recipes-modal").on("click", "#share-favorite", function () {
         console.log($(this).attr("recipe-id"));
+    });
+
+
+    $("#log-out").on("click", function(){
+        $.ajax("/logout", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/");
+        })
     })
+
+    $("#favorites-area").on("click", ".result", function(){
+        var recipeId = $(this).attr("recipe-id");
+        $.ajax(("/recipes/" + recipeId), {
+            type: "GET"
+        }).then(function (response) {
+            renderRecipe(response);
+        })
+    })
+
+    $("#open-home-page").on("click", function() {
+        $.ajax("/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/");
+        })
+    })
+
+    $("#open-favorite-page").on("click", function() {
+        $.ajax("/profile/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/profile/");
+        })
+    })
+
+    $("#open-cart-page").on("click", function() {
+        $.ajax("/cart/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/cart/");
+        })
+    })
+
+    
+
+
 
 
 });

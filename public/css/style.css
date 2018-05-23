@@ -34,7 +34,7 @@ h6 {
     background-position: center;
     background-image: url("../img/basil-delicious-food-459469.jpg");
     display: grid;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 150px 1fr;
     border-bottom: solid 10px rgba(255, 177, 32, 0.938);
 }
 
@@ -68,7 +68,12 @@ h6 {
     padding: 10px 10px 10px 0;
     ;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.login-buttons {
+    box-sizing: border-box;
+    padding: 0 10px;
 }
 
 /* Main Section */
@@ -99,7 +104,7 @@ h6 {
 
 /* Results */
 
-#results-area {
+#results-area, #favorites-area{
     padding: 20px 10px;
     background-color: #fff8dc;
     display: grid;
@@ -339,8 +344,97 @@ div>#add-fav {
     padding: 5px;
 }
 
-/*  Other */
 
-.logged-in-divs {
-    /*display: none;*/
+/* Profile Page */
+
+.profile {
+    text-align: center;
+    padding: 10px 0 50px 0;
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
+.profile-wrapper {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 2fr 1fr;
+    margin: 10px 20%;
+    background: rgba(255, 177, 32, 0.5);
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    
+ }
+
+ .profile-info {
+     border: solid 1px black;
+     background-color: rgba(255, 255, 255, 0.5);
+     border-radius: 5px;
+ }
+
+ .profile-info > div {
+    padding: 10px 5px;
+    text-align: left;
+    
+ }
+
+ #profile-info-header {
+     border-bottom: 1px solid black;
+ }
+
+.profile-info > div > p {
+    font-family: 'Pontano Sans', sans-serif;
+    
+}
+
+.profile-photo > img {
+    text-align: center;
+    
+}
+
+
+
+/* another section */
+
+
+.logged-in-divs, .logged-out-divs {
+    display: none;
+}
+
+
+
+
+/* Cart Section */
+
+.cart {
+    text-align: left;
+    padding: 10px 0 50px 0;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.cart-wrapper {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-rows: 1fr 5fr;
+    margin: 10px 20%;
+    background: rgba(255, 177, 32, 0.5);
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    
+ }
+
+ #cart-header {
+    border-bottom: 1px solid black;
+}
+
+.cart-item > ul { 
+    padding: 10px 0;
+}
+
+.cart-item > ul > li{
+    color: black;
+    font-family: 'Pontano Sans', sans-serif;
+
 }

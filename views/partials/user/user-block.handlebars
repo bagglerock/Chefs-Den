@@ -1,10 +1,18 @@
-<div>
-    <ul>
-        <li> {{data.email}}</li>
-        <li> {{data.userName}}</li>
-        <li> {{data.password}}</li>
-        <li> {{data.about}}</li>
-        <li> {{data.img_url}}</li>
-        <li> {{data.like_dislike}}</li>
-    </ul>
+<div class="profile-wrapper">
+    <div class="profile-info">
+        <div id="profile-info-header"><h4>Information</h4></div>
+        <div class="profile-name">
+            <p>User: {{data.userName}}</p>
+        </div>
+        <div class="profile-email">
+            <p>Email: {{data.email}}</p>
+        </div>
+        <div class="profile-about">
+            <p>About: {{data.about}}</p>
+
+        </div>
+    </div>
+    <div class="profile-photo">
+        <img src="{{data.img_url}}" alt="User Picture Goes Here" width="200">
+    </div>
 </div>

@@ -40,6 +40,7 @@ require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/cart-routes.js")(app);
 require("./routes/auth-routes.js")(app);
+require("./routes/favorites-routes.js")(app);
 
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync({}).then(function(){

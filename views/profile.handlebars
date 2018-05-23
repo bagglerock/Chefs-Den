@@ -8,19 +8,24 @@
             <div class="title">
                 <h1>Chef's Den</h1>
             </div>
-            {{>header/nav-cart-block}}
+            {{>header/nav-fav-block}}
         </div>
 
-        <div class="cart">
-            {{>main/cart-block}}
+        <div class="profile">
+            {{>user/user-block}}
         </div>
 
     </div>
 
-    <div id="results-area">
+    <div id="favorites-area">
+        {{>main/favorites-block}}
     </div>
+
+    
 
 </div>
+
+
 
 
 <!--  Modals  -->

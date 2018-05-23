@@ -8,101 +8,66 @@ module.exports = function (app) {
 
   // index route loads the home page with search item
   app.get("/", function (req, res) {
-    res.render("index");
-  });
-
-  //route for displaying favorites page
-  /*
-  app.get("api/favorites", function (req, res) {
-    db.Favorite.findAll({})
-      .then(function (dbFavorite) {
-        res.json(dbFavorite);
-      });
-
-  });
-  */
-
-  //to delete a favorited item
-  /*
-  app.delete("/api/favorites/:id", function (req, res) {
-    db.Favorite.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (dbFavorite) {
-      res.json(dbFavorite);
-    });
-  });
-  */
-
-  //========================================
-
-  //user profile routes. 
-
-  //to show the user when user clicks on show profile. 
-  app.get("/user/:id", function (req, res) {
-   
-    db.User.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (user) {
-      console.log(user.dataValues);
-      var data = user.dataValues;
-       var hbsObject = {
-         userName: data.userName,
-         email: data.email,
-         img_url: data.img_url,
-         password: data.password
-       }
-      res.render("favorite", hbsObject);
-    });
-  });
-
-  //To update an user information. 
-  app.put("/user/:id", function (req, res){
-    db.User.update(req.body, 
-      {
-      where:{
-        id: req.body.id
-      }
-    })
-    .then (function(user){
-      res.render("favorite", user);
-    })
-  })
-
-  //Route to deleting a user.
-  app.delete("/api/user/:id", function (req, res) {
-    db.User.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (user) {
-      res.json("id: "+res.insertId);
-    });
-  })
-
-  app.get("/cart", function (req, res) {
-    db.Cart.findAll().then(function(cartItems){
-      console.log(cartItems);
-      var hbsObject = {
-        cartItems: cartItems
-      };
-      res.render("cart", hbsObject);
-    })
-  });
-
-  app.get("/favorite/:id", function (req, res) {
-    var user = {
-      id: req.params.id
+    var user = req.user;
+    var style = "style=" + "\"" + "display:block;" + "\"";
+    var styleT = {
+      userTrue: style
     }
-    db.User.findOne(user).then(function(data){
-      var hbsObject = {
-        data: data.dataValues
-      }
-      res.render("favorite", hbsObject);
-    })
+    var styleF = {
+      userFalse: style
+    }
+    if(user){
+      res.render("index", styleT);
+    } else {
+      res.render("index", styleF);
+    }
   });
-  
+
+  app.get("/profile/", function (req, res) {
+    //set variable to the current user
+    var userSession = req.user;
+    //if current user exists then send to the correct page, otherwise send user back to index page for now
+    if (userSession){
+      var user = {
+        where: {
+          id: userSession.id
+        },
+        include: [db.Favorite]
+      }
+      db.User.findOne(user).then(function (data) {
+        var hbsObject = {
+          data: data.dataValues,
+          favoritesData: data.Favorites
+        }
+        res.render("profile", hbsObject);
+      })
+    } else {
+      res.redirect("/");
+    }
+  });
+
+  app.get("/cart/", function (req, res) {
+    //set variable to the current user
+    var userSession = req.user;
+    //if current user exists then send to the correct page, otherwise send user back to index page for now
+    if (userSession){
+      var user = {
+        where: {
+          id: userSession.id
+        },
+        include: [db.Cart]
+      }
+      db.User.findOne(user).then(function (data) {
+        console.log(data);
+        var hbsObject = {
+          cartItems: data.Carts
+        };
+        res.render("cart", hbsObject);
+      })
+
+    } else {
+      res.render("index");
+    }
+  });
+
 };
