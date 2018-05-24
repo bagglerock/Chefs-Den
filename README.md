@@ -2,7 +2,7 @@ Project 2 Chef's Den:
 
 Summary:
 
-An application dedicated to your food needs.  Full stack application running on Node.
+An application dedicated to your food needs. Full stack application running on Node.
 
 Authors:
 
@@ -29,10 +29,12 @@ Implementations:
 
 </ul>
 
-Heroku link:  https://immense-plateau-63304.herokuapp.com
+Heroku link: https://immense-plateau-63304.herokuapp.com
+
+-------------------
 
 
+Official Group Link:
 
-
-
-
+<p>Github: <a href="https://github.com/chitramaddy/project-2">https://github.com/chitramaddy/project-2</a></p>
+<p>Heroku: <a href="https://murmuring-mesa-44103.herokuapp.com/">https://murmuring-mesa-44103.herokuapp.com/</a></p>

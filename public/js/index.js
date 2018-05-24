@@ -50,12 +50,12 @@ function showChosenIngredients() {
     //  add a header to the ingredients area
     $("#ingredients-area").empty();
     if (chosenIngredients.length > 0) {
-        var header = $("<h3>");
-        header.text("Chosen Ingredients").addClass("chosen-ingredients-header");
+        var header = $("<h6>");
+        header.text("Chosen Ingredients").addClass("chosen-header");
         $("#ingredients-area").append(header);
     }
-    // add each ingredient as a button to the ingredients area
     $("filters-area").append(header);
+    // add each ingredient as a button to the ingredients area
     for (var i = 0; i < chosenIngredients.length; i++) {
         var button = $("<button>");
         button.text(chosenIngredients[i]).addClass("filter-button fas fa-trash chosen-ingredient");
@@ -65,8 +65,10 @@ function showChosenIngredients() {
 
 function showFilters() {
     $("#filters-area").empty();
+    var hasFilters = false;
     for (var i = 0; i < chosenFilters.length; i++) {
         if (chosenFilters[i].filters.length > 0) {
+            hasFilters = true;
             for (var j = 0; j < chosenFilters[i].filters.length; j++) {
                 var thisFilter = chosenFilters[i].filters[j];
                 var button = $("<button>");
@@ -75,6 +77,11 @@ function showFilters() {
                 $("#filters-area").append(button);
             }
         }
+    }
+    if (hasFilters) {
+        var header = $("<h6>");
+        header.text("Chosen Filters").addClass("chosen-header");
+        $("#filters-area").prepend(header);
     }
 }
 
@@ -104,6 +111,15 @@ $(document).ready(function () {
         $("#signup-error").empty();
     })
 
+    //  Event listener:  click to open filters modal
+    $("#open-filters-modal").on("click", function () {
+        //functions to make the buttons and append them to the modal
+        makeButtonsFor("cuisines");
+        makeButtonsFor("diets");
+        makeButtonsFor("intolerances");
+        $("#filters-modal").show();
+    })
+
     //  Event listener: click to close(hide) the modal
     $("#filters-close").on("click", function () {
         $(".modal").hide();
@@ -125,15 +141,6 @@ $(document).ready(function () {
         $(".modal").hide();
     })
 
-    //  Event listener:  click to open filters modal
-    $("#open-filters-modal").on("click", function () {
-        //functions to make the buttons and append them to the modal
-        makeButtonsFor("cuisines");
-        makeButtonsFor("diets");
-        makeButtonsFor("intolerances");
-        $("#filters-modal").show();
-    })
-
     //  Event listener:  click to add an ingredient to the chose ingredients array
     $("#add-ingredient").on("click", function () {
         event.preventDefault();
@@ -142,7 +149,6 @@ $(document).ready(function () {
             chosenIngredients.push(query);
             showChosenIngredients();
             $("#query").val("");
-
         }
     })
 
@@ -154,7 +160,6 @@ $(document).ready(function () {
         chosenIngredients.splice(indexOfIngredient, 1);
         $("#ingredients-area").empty();
         showChosenIngredients();
-
     })
 
     //  Event listener: click to subtract filter from the filters array and remove from main view
@@ -165,6 +170,7 @@ $(document).ready(function () {
                 var theFiltersWithin = chosenFilters[i].filters;
                 var indexOfChosenFilter = theFiltersWithin.indexOf(searchValue);
                 theFiltersWithin.splice(indexOfChosenFilter, 1);
+                $("#filters-area").empty();
                 showFilters();
             }
         }
@@ -202,42 +208,12 @@ $(document).ready(function () {
         }
     })
 
-    $("#recipes-modal").on("click", "#add-favorite", function () {
-        var recipeId = $(this).attr("recipe-id");
-        var recipeName = $(this).attr("recipe-name");
-        var recipeImage = $(this).attr("image");
-        console.log(recipeId);
-
-        var data = {
-            id: recipeId,
-            name: recipeName,
-            image: recipeImage
-        }
-        $.ajax("/api/favorites/", {
-            type: "POST",
-            data: data
-
-        }).then(function () {
-            console.log("Sent favorite data");
-            $("#add-favorite").css("color", "red");
-            //do something to change the heart color or something
-        })
-    })
-
     $("#recipes-modal").on("click", "#share-favorite", function () {
         console.log($(this).attr("recipe-id"));
     });
 
 
-    $("#log-out").on("click", function(){
-        $.ajax("/logout", {
-            type: "GET"
-        }).then(function() {
-            window.location.assign("/");
-        })
-    })
-
-    $("#favorites-area").on("click", ".favorite-image", function(){
+    $("#favorites-area").on("click", ".favorite-image", function () {
         var recipeId = $(this).attr("recipe-id");
         $.ajax(("/recipes/" + recipeId), {
             type: "GET"
@@ -245,44 +221,6 @@ $(document).ready(function () {
             renderRecipe(response);
         })
     })
-
-    $("#open-home-page").on("click", function() {
-        $.ajax("/", {
-            type: "GET"
-        }).then(function() {
-            window.location.assign("/");
-        })
-    })
-
-    $("#open-favorite-page").on("click", function() {
-        $.ajax("/profile/", {
-            type: "GET"
-        }).then(function() {
-            window.location.assign("/profile/");
-        })
-    })
-
-    $("#open-cart-page").on("click", function() {
-        $.ajax("/cart/", {
-            type: "GET"
-        }).then(function() {
-            window.location.assign("/cart/");
-        })
-    })
-
-    $("#favorites-area").on("click", ".remove-favorite", function () {
-        //console.log("this has been hit");
-        var recipeId = $(this).attr("recipe-id");
-        $.ajax("/api/favorites/" + recipeId, {
-            type: "DELETE"
-        }).then(function(){
-            window.location.assign("/profile");
-        })
-    })
-
-    
-
-
 
 
 });
