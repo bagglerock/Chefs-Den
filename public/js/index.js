@@ -81,6 +81,21 @@ function showFilters() {
     }
 };
 
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+
+        $.each(input.files, function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $images.append('<img src="' + e.target.result + '" height="100"/>')
+            }
+            reader.readAsDataURL(this);
+        });
+
+    }
+}
+
 
 $(document).ready(function () {
 
@@ -135,6 +150,14 @@ $(document).ready(function () {
     $(".cancel").on("click", function () {
         $(".modal").hide();
     })
+
+    //  This previews the image on the sign-up modal when an image is selected...  (copy/pasted), not sure why $images works
+    $images = $('#img-output')
+
+    $("#signup-img-url").change(function (event) {
+        readURL(this);
+    });
+
 
     //  Event listener:  click to add an ingredient to the chose ingredients array
     $("#add-ingredient").on("click", function () {
