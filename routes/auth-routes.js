@@ -2,7 +2,6 @@ require("dotenv").config();
 
 var db = require("../models");
 var passport = require("../config/passport");
-var request = require("request");
 var express = require("express");
 var keys = require("../keys");
 var path = require("path");
@@ -12,9 +11,6 @@ var formidable = require('formidable');
 var cloudinary = require('cloudinary');
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
-
-var app_id = keys.yummly.app_id;
-var app_key = keys.yummly.app_key;
 
 var cloudname = keys.cloudinary.cloudname;
 var cloudapi_key = keys.cloudinary.api_key;

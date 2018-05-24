@@ -61,9 +61,6 @@ function makeQueryURL (reqBody){
   return queryURL;
 }
 
-http://api.yummly.com/v1/api/recipes?&_app_id=3f2c9a8d&_app_key=e92f49e132a104a2da4588b89f9f4eea&allowedIngredient[]=egg&allowedCuisine[]=cuisine^cuisine-thai&allowedDiet[]=386^Vegan&allowedAllergy[]=399^Sesame-Free
-
-
 
 module.exports = function (app) {
 
