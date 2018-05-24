@@ -1,20 +1,11 @@
 require("dotenv").config();
 
-var db = require("../models");
-var passport = require("../config/passport");
-var request = require("request");
-var keys = require("../keys");
+const db = require("../models");
+const request = require("request");
+const keys = require("../keys");
 
-// import formidable
-var formidable = require('formidable');
-var cloudinary = require('cloudinary');
-
-var app_id = keys.yummly.app_id;
-var app_key = keys.yummly.app_key;
-
-var cloudname = keys.cloudinary.cloudname;
-var cloudapi_key = keys.cloudinary.api_key;
-var cloudapi_secret = keys.cloudinary.api_secret;
+const app_id = keys.yummly.app_id;
+const app_key = keys.yummly.app_key;
 
 
 function fixImage(resObject) {
@@ -33,70 +24,54 @@ function fixImage(resObject) {
   }
 }
 
+function makeQueryURL (reqBody){
+
+  const endpoint = "http://api.yummly.com/v1/api/recipes?";
+
+  let queryURL = endpoint;
+  queryURL += "&_app_id=" + app_id + "&_app_key=" + app_key;
+
+  if (reqBody.query && reqBody.query !== "") {
+    queryURL += "&q=" + reqBody.query;
+  }
+
+  if (reqBody.ingredients && reqBody.ingredients.length > 0) {
+    for (let i = 0; i < reqBody.ingredients.length; i++) {
+      queryURL += "&allowedIngredient[]=" + reqBody.ingredients[i];
+    }
+  }
+
+  if (reqBody.cuisines && reqBody.cuisines.length > 0) {
+    for (let i = 0; i < reqBody.cuisines.length; i++) {
+      queryURL += "&allowedCuisine[]=" + reqBody.cuisines[i];
+    }
+  }
+
+  if (reqBody.diets && reqBody.diets.length > 0) {
+    for (let i = 0; i < reqBody.diets.length; i++) {
+      queryURL += "&allowedDiet[]=" + reqBody.diets[i];
+    }
+  }
+
+  if (reqBody.intolerances && reqBody.intolerances.length > 0) {
+    for (let i = 0; i < reqBody.intolerances.length; i++) {
+      queryURL += "&allowedAllergy[]=" + reqBody.intolerances[i];
+    }
+  }
+  return queryURL;
+}
+
+http://api.yummly.com/v1/api/recipes?&_app_id=3f2c9a8d&_app_key=e92f49e132a104a2da4588b89f9f4eea&allowedIngredient[]=egg&allowedCuisine[]=cuisine^cuisine-thai&allowedDiet[]=386^Vegan&allowedAllergy[]=399^Sesame-Free
+
+
+
 module.exports = function (app) {
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
 
-    //query to the api
-    var queryURL = "http://api.yummly.com/v1/api/recipes?&_app_id=" + app_id + "&_app_key=" + app_key;
-
-    //if there is query item(for eg: yam fries)
-    var query = req.body.query;
-    if (query) {
-      queryURL += "&q=" + query;
-    }
-
-    //Search based on ingredients for the ingredients keyed in 
-    function searchIngredients() {
-      var ingredients = req.body.ingredients;
-      if (ingredients && ingredients.length > 0) {
-        //go through the array and construct each of the ampersand queries
-        for (var i = 0; i < ingredients.length; i++) {
-          queryURL += "&allowedIngredient[]=" + ingredients[i];
-        }
-      }
-      //once the ingredients are added to the queryURL, move to add cuisines
-      includeCuisines();
-    }
-
-    //search based on cuisines if the cuisine filters were selected
-    function includeCuisines() {
-      var cuisines = req.body.cuisines;
-      if (cuisines && cuisines.length > 0) {
-        //go through the array and construct each of the ampersand allowedCuisines queries
-        for (var i = 0; i < cuisines.length; i++) {
-          queryURL += "&allowedCuisine[]=" + cuisines[i];
-        }
-        //once the cuisines are added to the queryURL, move on to add Diets
-        includeDiet();
-      }
-    }
-
-    //search based on Diets if the diet filters were selected
-    function includeDiet() {
-      var diets = req.body.diets;
-      if (diets && diets.length > 0) {
-        for (var i = 0; i < diets.length; i++) {
-          queryURL += "&allowedDiet[]=" + diets[i];
-        }
-      }
-      //once the diets are added to the queryURL, move on to exclude the recipes with allergy items. This is done by adding the allowedAllergy to queryURL 
-      excludeAllergies();
-    }
-
-    function excludeAllergies() {
-      var intolerances = req.body.intolerances;
-      if (intolerances && intolerances.length > 0) {
-        for (var i = 0; i < intolerances.length; i++) {
-          queryURL += "&allowedAllergy[]=" + intolerances[i];
-        }
-      }
-    }
-
-    //Calling the function that begins the building of queryURL. This basically search for ingredients.
-    searchIngredients();
-    console.log(queryURL);
+    const reqBody = req.body;
+    let queryURL = makeQueryURL(reqBody);
 
     request(queryURL, function (error, response, body) {
       if (!error && response.statusCode === 200) {
