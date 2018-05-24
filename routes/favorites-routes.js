@@ -17,4 +17,14 @@ module.exports = function (app) {
         })
     })
 
+    app.delete("/api/favorites/:id", function (req, res) {
+        db.Favorite.destroy({
+          where: {
+            id: req.params.id
+          }
+        }).then(function (dbFavorite) {
+          res.json(dbFavorite);
+        });
+      });
+
 };

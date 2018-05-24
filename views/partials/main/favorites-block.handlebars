@@ -1,12 +1,13 @@
 {{#each favoritesData}}
 
-<div class="result" recipe-id="{{dataValues.recipe_id}}">
-    <div class="favorite-image">
+<div class="result">
+    <div class="favorite-image" recipe-id="{{dataValues.recipe_id}}">
         <img src="{{dataValues.recipe_img}}" alt="">
     </div>
     <div class="favorite-name">
         <h4>{{dataValues.recipe_name}}</h4>
     </div>
+    <div class="floating remove-favorite" recipe-id="{{dataValues.id}}">X</div>
 </div>
 
 {{/each}}

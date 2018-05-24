@@ -237,7 +237,7 @@ $(document).ready(function () {
         })
     })
 
-    $("#favorites-area").on("click", ".result", function(){
+    $("#favorites-area").on("click", ".favorite-image", function(){
         var recipeId = $(this).attr("recipe-id");
         $.ajax(("/recipes/" + recipeId), {
             type: "GET"
@@ -267,6 +267,16 @@ $(document).ready(function () {
             type: "GET"
         }).then(function() {
             window.location.assign("/cart/");
+        })
+    })
+
+    $("#favorites-area").on("click", ".remove-favorite", function () {
+        //console.log("this has been hit");
+        var recipeId = $(this).attr("recipe-id");
+        $.ajax("/api/favorites/" + recipeId, {
+            type: "DELETE"
+        }).then(function(){
+            window.location.assign("/profile");
         })
     })
 
