@@ -1,19 +1,14 @@
 //  Function to clean up the searchvalue string to be displayed as a button
 function cleanSearchValue(str) {
     //  Find the string that follows the "^" character and set it as searchValueClean
-    var regex = /(?<=\^)[\w+. -]+/;
-    str = regex.exec(str);
+    str = str.replace(/^.+\^/, "")
     //  If the word starts with cuisine (ie. cuisine-american) then get rid of the cuisine part
-    //  Note:  regex.exec(string) returns an array - element 0 is the found word
-    if (str[0].startsWith("cuisine")) {
-        //  regex:  take the value that follows "cuisine-"
-        var cuisineRegex = /(?<=cuisine-)[\w+.-]+/;
-        str = cuisineRegex.exec(str[0]);
-        //  Make the first letter capital
-        str = str[0].charAt(0).toUpperCase() + str[0].substring(1);
+    if (str.startsWith("cuisine")) {
+        str = str.replace(/^.+\-/, "")
+        str = str.charAt(0).toUpperCase() + str.substring(1);
     }
     return str;
-}
+};
 
 //  Function to make the filter buttons in the filters modal
 function makeButtonsFor(filterName) {
@@ -26,6 +21,7 @@ function makeButtonsFor(filterName) {
                 var button = $("<button>");
                 //  Take the search Value
                 var searchValue = filter.filters[j];
+                //searchValue = searchValue.replace("^", "remove");
                 var searchValueClean = cleanSearchValue(searchValue);
                 button.addClass("filter-button " + filterName + "-button");
                 button.attr("search-value", searchValue);
@@ -43,7 +39,7 @@ function makeButtonsFor(filterName) {
             }
         }
     }
-}
+};
 
 //  Function to display the chosen filters for ingredients
 function showChosenIngredients() {
@@ -61,7 +57,7 @@ function showChosenIngredients() {
         button.text(chosenIngredients[i]).addClass("filter-button fas fa-trash chosen-ingredient");
         $("#ingredients-area").append(button);
     }
-}
+};
 
 function showFilters() {
     $("#filters-area").empty();
@@ -83,11 +79,10 @@ function showFilters() {
         header.text("Chosen Filters").addClass("chosen-header");
         $("#filters-area").prepend(header);
     }
-}
+};
 
 
 $(document).ready(function () {
-
 
     //  Event listener: hovering over the buttons in the login area
     $(".login-buttons").hover(
@@ -149,8 +144,8 @@ $(document).ready(function () {
             chosenIngredients.push(query);
             showChosenIngredients();
             $("#query").val("");
-        }
-    })
+        };
+    });
 
     //  Event listener:  click to subtract ingredient from the ingredients array
     $("#ingredients-area").on("click", ".chosen-ingredient", function () {
