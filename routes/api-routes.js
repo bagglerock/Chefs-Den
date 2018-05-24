@@ -9,7 +9,7 @@ const app_key = keys.yummly.app_key;
 
 
 function fixImage(resObject) {
-  if (resObject) {
+  if (resObject.statusCode !== 500) {
     for (var i = 0; i < resObject.matches.length; i++) {
       if (resObject.matches[i].smallImageUrls) {
         var img = resObject.matches[i].smallImageUrls[0];
@@ -20,7 +20,8 @@ function fixImage(resObject) {
     }
     return resObject;
   } else {
-    return null;
+    console.log("Error: Status Code" + resObject.statusCode)
+    return resObject;
   }
 }
 
