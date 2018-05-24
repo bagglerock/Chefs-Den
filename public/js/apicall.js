@@ -68,23 +68,25 @@ function renderRecipe(res) {
     var recipeName = res.name;
     var sourceRecipe = res.source.sourceRecipeUrl;
 
-    var recipeId = res.id;
-    var favoritesDiv = $("<div>");
-    var favDivUl = $("<ul>");
-    var heartLi = $("<li>");
-    var heart = $("<i>");
-    heart.addClass("fas fa-heart fa-3x")
-        .attr("recipe-id", recipeId)
-        .attr("id", "add-favorite")
-        .attr("image", image)
-        .attr("recipe-name", recipeName);
-    heartLi.append(heart).attr("id", "add-fav");
-    var shareLi = $("<li>");
-    var share = $("<i>");
-    share.addClass("fas fa-share-alt-square fa-3x").attr("recipe-id", sourceRecipe).attr("id", "share-favorite");
-    shareLi.append(share).attr("id", "share-fav");
-    favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
-    favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
+    if (res.loggedStatus) {
+        var recipeId = res.id;
+        var favoritesDiv = $("<div>");
+        var favDivUl = $("<ul>");
+        var heartLi = $("<li>");
+        var heart = $("<i>");
+        heart.addClass("fas fa-heart fa-3x")
+            .attr("recipe-id", recipeId)
+            .attr("id", "add-favorite")
+            .attr("image", image)
+            .attr("recipe-name", recipeName);
+        heartLi.append(heart).attr("id", "add-fav");
+        var shareLi = $("<li>");
+        var share = $("<i>");
+        share.addClass("fas fa-share-alt-square fa-3x").attr("recipe-id", sourceRecipe).attr("id", "share-favorite");
+        shareLi.append(share).attr("id", "share-fav");
+        favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
+        favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
+    }
 
     var nameDiv = $("<div>");
     var nameH = $("<h4>");
@@ -188,7 +190,6 @@ $(document).ready(function () {
 
     $("#results-area").on("click", "ul", function () {
         var recipeId = $(this).attr("recipe-id");
-
         $.ajax(("/recipes/" + recipeId), {
             type: "GET"
         }).then(function (response) {
@@ -196,17 +197,16 @@ $(document).ready(function () {
         })
     })
 
-    $("#recipes-modal").on("click", ".ingredient", function() {
+    $("#recipes-modal").on("click", ".ingredient", function () {
         var newCartItem = {
-            id: $(this).attr("recipe-id"), 
+            id: $(this).attr("recipe-id"),
             name: $(this).attr("ingredient-name"),
             qty: $(this).attr("qty")
         }
         $.ajax("/api/cart/", {
             type: "POST",
             data: newCartItem
-        }).then(function(response){
-        })
+        }).then(function (response) {})
     })
 
 

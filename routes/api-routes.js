@@ -66,6 +66,7 @@ module.exports = function (app) {
 
   app.get("/recipes/:id", function (req, res) {
     var recipeId = req.params.id;
+    var user = req.user;
     request(
       "http://api.yummly.com/v1/api/recipe/" +
       recipeId +
@@ -78,6 +79,11 @@ module.exports = function (app) {
           //  have to parse the response to JSON
           var recipe = JSON.parse(body);
         }
+        if (user) {
+          recipe.loggedStatus = true;
+        } else {
+          recipe.loggedStatus = false;
+        }
         res.send(recipe);
       }
     );
@@ -86,7 +92,6 @@ module.exports = function (app) {
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
-
     const reqBody = req.body;
     let queryURL = makeQueryURL(reqBody);
 

@@ -82,9 +82,7 @@ function showFilters() {
 };
 
 function readURL(input) {
-
     if (input.files && input.files[0]) {
-
         $.each(input.files, function () {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -92,7 +90,6 @@ function readURL(input) {
             }
             reader.readAsDataURL(this);
         });
-
     }
 }
 
