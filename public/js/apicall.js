@@ -86,6 +86,11 @@ function renderRecipe(res) {
         shareLi.append(share).attr("id", "share-fav");
         favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
         favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
+    } else {
+        var favoritesDiv = $("<div>");
+        var message = $("<h4>");
+        message.text("Sign up or Login to add to favorites.").css("color", "red");
+        favoritesDiv.append(message);
     }
 
     var nameDiv = $("<div>");
