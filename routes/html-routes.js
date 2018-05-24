@@ -1,6 +1,9 @@
 var db = require("../models");
 var express = require("express");
 
+// Requiring our custom middleware for checking if a user is logged in
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+
 module.exports = function (app) {
 
   // Each of the below routes just handles the HTML page that the user gets sent to.
@@ -15,41 +18,35 @@ module.exports = function (app) {
     var styleF = {
       userFalse: style
     }
-    if(user){
+    if (user) {
       res.render("index", styleT);
     } else {
       res.render("index", styleF);
     }
   });
 
-  app.get("/profile/", function (req, res) {
+  app.get("/profile/", isAuthenticated, function (req, res) {
     //set variable to the current user
     var userSession = req.user;
-    //if current user exists then send to the correct page, otherwise send user back to index page for now
-    if (userSession){
-      var user = {
-        where: {
-          id: userSession.id
-        },
-        include: [db.Favorite]
-      }
-      db.User.findOne(user).then(function (data) {
-        var hbsObject = {
-          data: data.dataValues,
-          favoritesData: data.Favorites
-        }
-        res.render("profile", hbsObject);
-      })
-    } else {
-      res.redirect("/");
+    var user = {
+      where: {
+        id: userSession.id
+      },
+      include: [db.Favorite]
     }
+    db.User.findOne(user).then(function (data) {
+      var hbsObject = {
+        data: data.dataValues,
+        favoritesData: data.Favorites
+      }
+      res.render("profile", hbsObject);
+    })
   });
 
-  app.get("/cart/", function (req, res) {
+  app.get("/cart/", isAuthenticated, function (req, res) {
     //set variable to the current user
     var userSession = req.user;
-    //if current user exists then send to the correct page, otherwise send user back to index page for now
-    if (userSession){
+
       var user = {
         where: {
           id: userSession.id
@@ -63,10 +60,6 @@ module.exports = function (app) {
         };
         res.render("cart", hbsObject);
       })
-
-    } else {
-      res.render("index");
-    }
   });
 
 };

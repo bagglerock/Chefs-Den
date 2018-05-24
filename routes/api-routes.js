@@ -24,7 +24,7 @@ function fixImage(resObject) {
   }
 }
 
-function makeQueryURL (reqBody){
+function makeQueryURL(reqBody) {
 
   const endpoint = "http://api.yummly.com/v1/api/recipes?";
 
@@ -64,6 +64,26 @@ function makeQueryURL (reqBody){
 
 module.exports = function (app) {
 
+  app.get("/recipes/:id", function (req, res) {
+    var recipeId = req.params.id;
+    request(
+      "http://api.yummly.com/v1/api/recipe/" +
+      recipeId +
+      "?_app_id=" +
+      app_id +
+      "&_app_key=" +
+      app_key,
+      function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+          //  have to parse the response to JSON
+          var recipe = JSON.parse(body);
+        }
+        res.send(recipe);
+      }
+    );
+  });
+
+
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
 
@@ -84,26 +104,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/recipes/:id", function (req, res) {
-    var recipeId = req.params.id;
-    request(
-      "http://api.yummly.com/v1/api/recipe/" +
-      recipeId +
-      "?_app_id=" +
-      app_id +
-      "&_app_key=" +
-      app_key,
-      function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-          //  have to parse the response to JSON
-          var recipe = JSON.parse(body);
-        }
-        res.send(recipe);
-      }
-    );
-  });
-  
-  
+
 
 
 }

@@ -5,7 +5,6 @@ module.exports = function (app) {
 
     app.post("/api/favorites/", function (req, res) {
         var newFavorite = {
-            
             recipe_img: req.body.image,
             recipe_name: req.body.name,
             recipe_id: req.body.id,
