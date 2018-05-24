@@ -9,8 +9,6 @@ var path = require("path");
 // import formidable
 var formidable = require('formidable');
 var cloudinary = require('cloudinary');
-// Requiring our custom middleware for checking if a user is logged in
-var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 var cloudname = keys.cloudinary.cloudname;
 var cloudapi_key = keys.cloudinary.api_key;
@@ -20,25 +18,15 @@ cloudinary.config({
 	cloud_name: cloudname,
 	api_key: cloudapi_key,
 	api_secret: cloudapi_secret
-  });
-
-function fixImage(resObject) {
-	if (resObject) {
-		for (var i = 0; i < resObject.matches.length; i++) {
-			if (resObject.matches[i].smallImageUrls) {
-				var img = resObject.matches[i].smallImageUrls[0];
-				resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
-				resObject.matches[i].totalTimeInSeconds =
-					resObject.matches[i].totalTimeInSeconds / 60;
-			}
-		}
-		return resObject;
-	} else {
-		return null;
-	}
-}
+});
 
 module.exports = function (app) {
+
+	// Route for logging user out
+	app.get("/logout", function (req, res) {
+		req.logout();
+		res.render("index");
+	});
 
 	app.post("/api/login", passport.authenticate("local"), function (req, res) {
 		//So we're sending back the route to the favorite page because the redirect will happen on the front end
@@ -61,7 +49,7 @@ module.exports = function (app) {
 						userName: fields.userName,
 						email: fields.email,
 						password: fields.password,
-						img_url: result.secure_url, 
+						img_url: result.secure_url,
 						about: fields.about
 					}).then(function (userInfo) {
 						// Upon successful signup, log user in
@@ -106,12 +94,17 @@ module.exports = function (app) {
 
 	});
 
-	// Route for logging user out
-	app.get("/logout", function (req, res) {
-		req.logout();
-		res.render("index");
-	});
-
+	//Route to update the user
+	app.put("/api/user/:id", function (req, res) {
+        db.User.update(req.body, {
+            where: {
+              id: req.body.id
+            }
+          })
+          .then(function (user) {
+            res.redirect("/profile/");
+          })
+      })
 
 
 }
