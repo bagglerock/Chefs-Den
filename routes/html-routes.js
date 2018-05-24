@@ -46,20 +46,19 @@ module.exports = function (app) {
   app.get("/cart/", isAuthenticated, function (req, res) {
     //set variable to the current user
     var userSession = req.user;
-
-      var user = {
-        where: {
-          id: userSession.id
-        },
-        include: [db.Cart]
-      }
-      db.User.findOne(user).then(function (data) {
-        console.log(data);
-        var hbsObject = {
-          cartItems: data.Carts
-        };
-        res.render("cart", hbsObject);
-      })
+    var user = {
+      where: {
+        id: userSession.id
+      },
+      include: [db.Cart]
+    }
+    db.User.findOne(user).then(function (data) {
+      console.log(data);
+      var hbsObject = {
+        cartItems: data.Carts
+      };
+      res.render("cart", hbsObject);
+    })
   });
 
 };
