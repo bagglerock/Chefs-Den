@@ -4,6 +4,8 @@ Summary:
 
 An application dedicated to your food needs. Full stack application running on Node.
 
+-------------------------
+
 Authors:
 
 <ul>
@@ -11,6 +13,8 @@ Authors:
 <li>Chitra Madhan</li>
 <li>Anthony Hernandez</li>
 </ul>
+
+--------------------------
 
 Implementations:
 
@@ -29,6 +33,8 @@ Implementations:
 
 </ul>
 
+-----------------------
+
 Heroku link: https://immense-plateau-63304.herokuapp.com
 
 -------------------
@@ -37,4 +43,4 @@ Heroku link: https://immense-plateau-63304.herokuapp.com
 Official Group Link:
 
 <p>Github: <a href="https://github.com/chitramaddy/project-2">https://github.com/chitramaddy/project-2</a></p>
-<p>Heroku: <a href="https://murmuring-mesa-44103.herokuapp.com/">https://murmuring-mesa-44103.herokuapp.com/</a></p>
+<p>Heroku (Under Construction): <a href="https://murmuring-mesa-44103.herokuapp.com/">https://murmuring-mesa-44103.herokuapp.com/</a></p>

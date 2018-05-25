@@ -96,16 +96,6 @@ function readURL(input) {
 
 $(document).ready(function () {
 
-    //  Event listener: hovering over the buttons in the login area
-    $(".login-buttons").hover(
-        (function () {
-            $(this).css("color", "yellow");
-        }),
-        (function () {
-            $(this).css("color", "white");
-        })
-    );
-
     //  Event listener:  click to open login modal
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();

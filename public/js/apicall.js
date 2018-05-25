@@ -43,7 +43,7 @@ function renderResults(res) {
 
         var liImage = $("<li>");
         var image = $("<img>");
-        image.attr("src", matches.smallImageUrls);
+        image.attr("src", matches.smallImageUrls).addClass("recipe-image");
         liImage.append(image);
 
         var liName = $("<li>");

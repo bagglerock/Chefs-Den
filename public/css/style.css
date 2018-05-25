@@ -74,6 +74,11 @@ h6 {
 .login-buttons {
     box-sizing: border-box;
     padding: 0 10px;
+    color: white;
+}
+
+.login-buttons:hover {
+    color: yellow;
 }
 
 /* Main Section */
@@ -342,6 +347,18 @@ div>#add-fav {
 #recipe-section>#fav-share-section>.fav-div-properties>li {
     display: inline-block;
     padding: 5px;
+}
+
+.result {
+    opacity: .7;
+}
+
+.result:hover {
+    opacity: 1.0;
+    -webkit-transition: all 0.3s ease-in-out;
+
+
+
 }
 
 
